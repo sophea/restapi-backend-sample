@@ -12,12 +12,12 @@ It can run JBOSS EAP / Tomcat / Jetty
 ```
 deploy with tomcat :
 
-mvn package && java -jar target/finet-api-0.0.5.war
+mvn package && java -jar target/finet-api-0.0.6.war
 
 deploy with JbossEAP :
 
 mvn clean install
-deploy the war file in target/finet-api-0.0.5.war in JBOSS EAP server
+deploy the war file in target/finet-api-0.0.6.war in JBOSS EAP server
 
 
 ```
@@ -31,7 +31,7 @@ http://localhost:8080/swagger-ui/index.html
 ```
 curl http://localhost:8080/actuator/info
 
-{"build":{"artifact":"finet-api","name":"finet-api","time":"2022-04-04T10:25:50.477Z","version":"0.0.5","group":"com.jtrust"}}
+{"build":{"artifact":"finet-api","name":"finet-api","time":"2022-04-04T10:25:50.477Z","version":"0.0.6","group":"com.jtrust"}}
 
 
 curl http://localhost:8080/actuator/health
