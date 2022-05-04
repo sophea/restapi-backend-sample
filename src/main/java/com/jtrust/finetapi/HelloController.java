@@ -31,7 +31,6 @@ public class HelloController {
     @GetMapping("/api/myaccount/balance")
     public Map<String, Object> getMyBalanace() {
         log.info("=========getMyBalanace===========");
-        int i=0;
         final Map<String, Object> result = new HashMap<>();
 
         result.put("cif", "000000000");
