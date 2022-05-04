@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.jtrust</groupId>
     <artifactId>finet-api</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <packaging>war</packaging>
     <name>finet-api</name>
     <description>Demo project for Spring Boot</description>
