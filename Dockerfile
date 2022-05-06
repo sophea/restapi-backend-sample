@@ -7,7 +7,8 @@ COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
 #COPY target target
-RUN --mount=type=cache,target=/root/.m2 ./mvnw  install -DskipTests
+#RUN --mount=type=cache,target=/root/.m2 ./mvnw  install -DskipTests
+./mvnw install -DskipTests
 FROM public.ecr.aws/amazoncorretto/amazoncorretto:11
 
 #RUN addgroup -S springboot && adduser -S springboot -G springboot
