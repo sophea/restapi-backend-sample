@@ -38,7 +38,7 @@ phases:
 artifacts:
   files:
     - imageDetail.json
-    - targe/*.jar
+    - target/*.war
 
 cache:
   paths:
