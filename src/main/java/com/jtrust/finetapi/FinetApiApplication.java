@@ -14,8 +14,9 @@ import java.util.Map;
 @Slf4j
 public class FinetApiApplication {
 
-    @Value("#{aws.secret.manager}")
+    @Value("${aws.secret.manager}")
     private Map<String, String> awsConfigProperties;
+
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 
