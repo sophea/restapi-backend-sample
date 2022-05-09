@@ -14,8 +14,12 @@ import java.util.Map;
 @Slf4j
 public class FinetApiApplication {
 
-    @Value("${aws.secret.manager}")
+    @Value("#{${aws.secret.manager}}")
     private Map<String, String> awsConfigProperties;
+
+    @Value("${aws.secret.manager}")
+    private String awsConfigPropertiesString;
+
 
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -29,6 +33,7 @@ public class FinetApiApplication {
     @Bean
     public void testBean(){
         log.info("=========LOADING AWS SECRET MANAGER CONFIG=============");
+        log.info("String object {}", awsConfigPropertiesString);
         log.info(gson.toJson(awsConfigProperties));
     }
 }
