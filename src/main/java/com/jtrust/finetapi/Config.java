@@ -1,7 +1,11 @@
 package com.jtrust.finetapi;
 
 import com.fasterxml.classmate.TypeResolver;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.web.server.ManagementPortType;
@@ -28,19 +32,28 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Configuration
 @EnableSwagger2
+@Slf4j
 public class Config {
 
 
     @Autowired
     private TypeResolver typeResolver;
 
+    @Value("#{${aws.secret.manager}}")
+    private Map<String, String> awsConfigProperties;
+
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    @Bean
+    public Map<String,String> loadAwsSecretBean(){
+        log.info("=========LOADING AWS SECRET MANAGER CONFIG=============");
+        log.info(gson.toJson(awsConfigProperties));
+        return awsConfigProperties;
+    }
 
     @Bean
     public  ApiInfo apiEndPointsInfo() {
