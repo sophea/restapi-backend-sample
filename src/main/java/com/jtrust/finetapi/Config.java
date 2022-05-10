@@ -14,6 +14,7 @@ import org.springframework.boot.actuate.endpoint.web.*;
 import org.springframework.boot.actuate.endpoint.web.annotation.ControllerEndpointsSupplier;
 import org.springframework.boot.actuate.endpoint.web.annotation.ServletEndpointsSupplier;
 import org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -32,6 +33,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import javax.servlet.Filter;
 import java.util.*;
 
 @Configuration
@@ -43,10 +45,30 @@ public class Config {
     @Autowired
     private TypeResolver typeResolver;
 
+    @Autowired
+    private Environment env;
+
     @Value("#{${aws.secret.manager}}")
     private Map<String, String> awsConfigProperties;
 
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    @Bean()
+    public FilterRegistrationBean basicAuthenticationFilter() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        final Filter filter = new AuthenticationFilter();
+
+        registration.addInitParameter("username", env.getProperty("basic.username"));
+        registration.addInitParameter("secret", env.getProperty("basic.password"));
+        registration.setFilter(filter);
+        registration.addUrlPatterns("/api/*");
+        registration.addUrlPatterns("/swagger-ui.html");
+        registration.addUrlPatterns("/swagger-ui/*");
+        registration.addUrlPatterns("/actuator/*");
+        registration.setOrder(1);
+
+        return registration;
+    }
 
     @Bean
     public Map<String,String> loadAwsSecretBean(){

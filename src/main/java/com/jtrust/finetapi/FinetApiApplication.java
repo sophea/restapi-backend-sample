@@ -9,8 +9,6 @@ public class FinetApiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FinetApiApplication.class, args);
-
-
     }
 
 
