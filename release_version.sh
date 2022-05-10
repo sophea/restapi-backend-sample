@@ -23,8 +23,8 @@ git commit -m "AUTOMATIC: Closed release $newVersion"
 git tag -a sec-$newVersion -m "release version $newVersion"
 git push --set-upstream --tags
 
-echo "upload the artifact"
-mvn deploy
+#echo "upload the artifact"
+#mvn deploy
 
 ###Increase version +1 and appending SNAPSHOT
 currentVersion=$newVersion
