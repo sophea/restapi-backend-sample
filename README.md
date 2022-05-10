@@ -25,11 +25,11 @@ deploy the war file in target/finet-api-0.0.6.war in JBOSS EAP server
 #### Test API
 
 REST-DOC-API : 
-http://localhost:8080/swagger-ui/index.html
+https://127.0.0.1/swagger-ui/index.html
 
 ### Health check and version api
 ```
-curl http://localhost:8080/actuator/info
+curl https://127.0.0.1/actuator/info
 
 {"build":{"artifact":"finet-api","name":"finet-api","time":"2022-04-04T10:25:50.477Z","version":"0.0.6","group":"com.jtrust"}}
 
