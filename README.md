@@ -12,12 +12,8 @@ It can run JBOSS EAP / Tomcat / Jetty
 ```
 deploy with tomcat :
 
-mvn package && java -jar target/finet-api-0.0.6.war
+mvn package && java -jar target/sample-api-1.0.1-SNAPSHOT.jar
 
-deploy with JbossEAP :
-
-mvn clean install
-deploy the war file in target/finet-api-0.0.6.war in JBOSS EAP server
 
 
 ```
@@ -40,6 +36,24 @@ curl http://localhost:8080/actuator/health
 
 ```
 
+
+### Features
+
+Sample Java springboot latest version 2.6.x with JAVA JDK 11 or later
+
+	- Support tomcat / jboss EAP web server
+	- Can run standalone server
+	- Can run as docker container
+	- Can run as AWS fargate severless 
+	- Can run on Win/Linux/Mac OS
+
+==========Features
+
+	- Generate swagger UI REST-APIs  : version 3.x.x
+	- Swagger UI  with Basic Authentication  validation
+	- Support actuator info/health
+	- Basic REST API  controller
+Apply APIs with  Basic Authentication  validation
 
 
 #### Springboot with springfox doc rest
