@@ -2,13 +2,13 @@ package com.jtrust.finetapi;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jtrust.finetapi.service.QueueSqsService;
-import com.jtrust.finetapi.sqs.QueuePayload;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,11 +20,8 @@ public class HelloController {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     Logger logger = LoggerFactory.getLogger(HelloController.class);
 
-    private QueueSqsService service;
 
-    public HelloController(QueueSqsService service) {
-        this.service = service;
-    }
+
     @GetMapping("/hello")
     @SwaggerPublicApi
     public String hello(@RequestParam(value = "name", defaultValue = "FINET API") String name) {
@@ -37,15 +34,6 @@ public class HelloController {
 
         return String.format("Hello %s!", name);
     }
-
-    @GetMapping("/send/message")
-    @SwaggerPublicApi
-    public QueuePayload sendPayload(@RequestBody QueuePayload payload) {
-        log.info("=========sendPayload=========== {} ", payload);
-        service.send(payload);
-        return payload;
-    }
-
 
 
     @SwaggerPublicApi
