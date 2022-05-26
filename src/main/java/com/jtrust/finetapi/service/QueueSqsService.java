@@ -28,6 +28,14 @@ public class QueueSqsService {
         this.queueMessagingTemplate = new QueueMessagingTemplate(amazonSQSAsync);
     }
 
+    /**
+     * @param message
+     * {
+     *     "source": "s3",
+     *     "destination": "netApp",
+     *     "uuid": "2342343243243sfaffasdfdsf"
+     * }
+     */
     public void send(QueuePayload message) {
         this.queueMessagingTemplate.send(queueName, MessageBuilder.withPayload(message).build());
     }
