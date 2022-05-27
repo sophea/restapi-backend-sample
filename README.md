@@ -2,8 +2,8 @@
 
 This is a basic springboot project with that latest version
 
-- springboot 2.6.x
-- java11
+- springboot 2.6.x or 2.7.x
+- java11 or later
 - maven build
 
 

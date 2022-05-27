@@ -3,11 +3,9 @@ package com.jtrust.finetapi.config;
 import com.fasterxml.classmate.TypeResolver;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import com.jtrust.finetapi.ErrorResponse;
 import com.jtrust.finetapi.SwaggerPublicApi;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
@@ -25,9 +23,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.OncePerRequestFilter;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -40,13 +36,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.*;
 
 @Configuration
@@ -89,13 +78,13 @@ public class Config {
         log.info(gson.toJson(awsConfigProperties));
         return awsConfigProperties;
     }
-
+    /**SWAGGER REST-APIs configuration**/
     @Bean
     public  ApiInfo apiEndPointsInfo() {
         return (new ApiInfoBuilder())
                 .title("Finet API")
                 .description("Finet API")
-                .termsOfServiceUrl("TCs")
+                .termsOfServiceUrl("Terms of Service applied")
                 .version("1.0.0")
                 .contact(new Contact("Sophea Mak", "JTRB", "sopheamak@gmail.com")).build();
     }
@@ -149,8 +138,8 @@ public class Config {
                                         .description("Not Found")
                                         .build()
                 ))
-                .additionalModels(typeResolver.resolve(ErrorResponse.class))
-        ;
+                .additionalModels(typeResolver.resolve(ErrorResponse.class));
+
     }
 
 
