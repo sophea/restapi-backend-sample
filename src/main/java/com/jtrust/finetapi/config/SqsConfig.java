@@ -33,8 +33,7 @@ public class SqsConfig {
                 .build();
     }
     @Bean
-    public QueueMessageHandlerFactory queueMessageHandlerFactory(
-            final ObjectMapper mapper, final AmazonSQSAsync amazonSQSAsync) {
+    public QueueMessageHandlerFactory queueMessageHandlerFactory(final ObjectMapper mapper, final AmazonSQSAsync amazonSQSAsync) {
         final QueueMessageHandlerFactory queueHandlerFactory = new QueueMessageHandlerFactory();
         queueHandlerFactory.setAmazonSqs(amazonSQSAsync);
         queueHandlerFactory.setArgumentResolvers(Collections.singletonList(
