@@ -2,10 +2,11 @@
 FROM public.ecr.aws/amazoncorretto/amazoncorretto:11 as build
 WORKDIR /workspace/app
 
-COPY mvnw .
-COPY .mvn .mvn
-COPY pom.xml .
-COPY src src
+#COPY mvnw .
+#COPY .mvn .mvn
+#COPY pom.xml .
+#COPY src src
+
 COPY target target
 #RUN --mount=type=cache,target=/root/.m2 ./mvnw  install -DskipTests
 #./mvnw install -DskipTests
@@ -15,6 +16,8 @@ FROM public.ecr.aws/amazoncorretto/amazoncorretto:11
 #USER springboot
 
 VOLUME /tmp
-ARG JAR_FILE=/workspace/app/target/*.war
-COPY --from=build ${JAR_FILE} app.war
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.war"]
+ARG JAR_FILE=/workspace/app/target/*.jar
+COPY --from=build ${JAR_FILE} app.jar
+
+EXPOSE 8443
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

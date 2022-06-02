@@ -20,6 +20,8 @@ public class HelloController {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     Logger logger = LoggerFactory.getLogger(HelloController.class);
 
+
+
     @GetMapping("/hello")
     @SwaggerPublicApi
     public String hello(@RequestParam(value = "name", defaultValue = "FINET API") String name) {

@@ -2,8 +2,8 @@
 
 This is a basic springboot project with that latest version
 
-- springboot 2.6.x
-- java11
+- springboot 2.6.x or 2.7.x
+- java11 or later
 - maven build
 
 
@@ -12,12 +12,8 @@ It can run JBOSS EAP / Tomcat / Jetty
 ```
 deploy with tomcat :
 
-mvn package && java -jar target/finet-api-0.0.6.war
+mvn package && java -jar target/sample-api-1.0.1-SNAPSHOT.jar
 
-deploy with JbossEAP :
-
-mvn clean install
-deploy the war file in target/finet-api-0.0.6.war in JBOSS EAP server
 
 
 ```
@@ -25,11 +21,11 @@ deploy the war file in target/finet-api-0.0.6.war in JBOSS EAP server
 #### Test API
 
 REST-DOC-API : 
-http://localhost:8080/swagger-ui/index.html
+https://127.0.0.1/swagger-ui/index.html
 
 ### Health check and version api
 ```
-curl http://localhost:8080/actuator/info
+curl https://127.0.0.1/actuator/info
 
 {"build":{"artifact":"finet-api","name":"finet-api","time":"2022-04-04T10:25:50.477Z","version":"0.0.6","group":"com.jtrust"}}
 
@@ -40,6 +36,24 @@ curl http://localhost:8080/actuator/health
 
 ```
 
+
+### Features
+
+Sample Java springboot latest version 2.6.x with JAVA JDK 11 or later
+
+	- Support tomcat / jboss EAP web server
+	- Can run standalone server
+	- Can run as docker container
+	- Can run as AWS fargate severless 
+	- Can run on Win/Linux/Mac OS
+
+==========Features
+
+	- Generate swagger UI REST-APIs  : version 3.x.x
+	- Swagger UI  with Basic Authentication  validation
+	- Support actuator info/health
+	- Basic REST API  controller
+Apply APIs with  Basic Authentication  validation
 
 
 #### Springboot with springfox doc rest
