@@ -15,10 +15,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.converter.MessageConverter;
 import org.springframework.messaging.handler.annotation.support.PayloadMethodArgumentResolver;
+
 import java.util.Collections;
 
 @Configuration
-@ConditionalOnProperty(name="aws.sqs.enabled", havingValue="true")
+@ConditionalOnProperty(name = "aws.sqs.enabled", havingValue = "true")
 @Profile("!(local | test)")
 public class SqsConfig {
     @Bean
@@ -26,6 +27,7 @@ public class SqsConfig {
             AmazonSQSAsync amazonSQSAsync) {
         return new QueueMessagingTemplate(amazonSQSAsync);
     }
+
     @Bean(name = "amazonSQSAsync")
     @Primary
     public AmazonSQSAsync amazonSQSAsync() {
@@ -34,6 +36,7 @@ public class SqsConfig {
                 .withCredentials(new DefaultAWSCredentialsProviderChain())
                 .build();
     }
+
     @Bean
     public QueueMessageHandlerFactory queueMessageHandlerFactory(final ObjectMapper mapper, final AmazonSQSAsync amazonSQSAsync) {
         final QueueMessageHandlerFactory queueHandlerFactory = new QueueMessageHandlerFactory();
@@ -43,6 +46,7 @@ public class SqsConfig {
         ));
         return queueHandlerFactory;
     }
+
     private MessageConverter jackson2MessageConverter(final ObjectMapper mapper) {
         final MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setStrictContentTypeMatch(false);
