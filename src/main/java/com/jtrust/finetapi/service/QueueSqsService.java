@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -35,12 +34,11 @@ public class QueueSqsService {
     }
 
     /**
-     * @param payload
-     * {
-     *     "source": "s3",
-     *     "destination": "netApp",
-     *     "uuid": "2342343243243sfaffasdfdsf"
-     * }
+     * @param payload {
+     *                "source": "s3",
+     *                "destination": "netApp",
+     *                "uuid": "2342343243243sfaffasdfdsf"
+     *                }
      */
     public void send(QueuePayload payload) {
         final String message = gson.toJson(payload);

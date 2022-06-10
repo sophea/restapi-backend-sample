@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@ConditionalOnProperty(name="aws.sqs.enabled", havingValue="true")
+@ConditionalOnProperty(name = "aws.sqs.enabled", havingValue = "true")
 public class SqsController {
 
     @Autowired
     private QueueSqsService service;
+
     @PostMapping("api/send/message")
     @SwaggerPublicApi
     public QueuePayload sendPayload(@RequestBody QueuePayload payload) {
