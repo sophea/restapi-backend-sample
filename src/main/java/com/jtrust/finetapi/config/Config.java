@@ -56,8 +56,8 @@ public class Config {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Bean()
-    public FilterRegistrationBean basicAuthenticationFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+    public FilterRegistrationBean<Filter> basicAuthenticationFilter() {
+        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
         final Filter filter = new AuthenticationFilter();
 
         registration.addInitParameter("username", env.getProperty("basic.username"));
@@ -74,7 +74,6 @@ public class Config {
 
     @Bean
     public Map<String, String> loadAwsSecretBean() {
-        int i = 02;
         log.info("=========LOADING AWS SECRET MANAGER CONFIG=============");
         log.info(gson.toJson(awsConfigProperties));
         return awsConfigProperties;
@@ -90,7 +89,6 @@ public class Config {
 
     @Bean
     public Docket documentApi() {
-        ModelRef errorResponseModelRef = new ModelRef("ErrorResponse");
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiEndPointsInfo()).select()
                 // .apis(RequestHandlerSelectors.basePackage("com.jtrust"))
                 .apis(RequestHandlerSelectors.withMethodAnnotation(SwaggerPublicApi.class))

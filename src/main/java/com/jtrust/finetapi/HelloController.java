@@ -59,7 +59,7 @@ public class HelloController {
         final Map<String, Object> result = new HashMap<>();
 
         result.put("cif", cif);
-        result.put("accountName", "JTRB Testing");
+        result.put("accountName", account);
         result.put("balance", amount);
         result.put("currency", "USD");
         result.put("status", 1);
