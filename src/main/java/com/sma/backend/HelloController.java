@@ -1,7 +1,9 @@
-package com.jtrust.finetapi;
+package com.sma.backend;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,15 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
 @Slf4j
 public class HelloController {
 
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    Logger logger = LoggerFactory.getLogger(HelloController.class);
+    private final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
 
 
@@ -27,10 +26,10 @@ public class HelloController {
     public String hello(@RequestParam(value = "name", defaultValue = "FINET API") String name) {
         log.info("=========hello===========");
 
-        logger.debug("=========DEBUG===========");
-        logger.info("=========INFO===========");
-        logger.warn("=========WARNING==========");
-        logger.error("=========ERROR===========");
+        this.logger.debug("=========DEBUG===========");
+        this.logger.info("=========INFO===========");
+        this.logger.warn("=========WARNING==========");
+        this.logger.error("=========ERROR===========");
 
         return String.format("Hello %s!", name);
     }
@@ -48,7 +47,7 @@ public class HelloController {
         result.put("currency", "USD");
         result.put("status", 1);
 
-        log.info(String.format("result output %s", gson.toJson(result)));
+        log.info(String.format("result output %s", this.gson.toJson(result)));
         return result;
     }
 
@@ -59,12 +58,12 @@ public class HelloController {
         final Map<String, Object> result = new HashMap<>();
 
         result.put("cif", cif);
-        result.put("accountName", "JTRB Testing");
+        result.put("accountName", account);
         result.put("balance", amount);
         result.put("currency", "USD");
         result.put("status", 1);
         result.put("ref", ref);
-        log.info(String.format("result output %s", gson.toJson(result)));
+        log.info(String.format("result output %s", this.gson.toJson(result)));
         return result;
     }
 }

@@ -1,4 +1,4 @@
-package com.jtrust.finetapi.config;
+package com.sma.backend.config;
 
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.regions.Regions;

@@ -1,9 +1,9 @@
-package com.jtrust.finetapi.service;
+package com.sma.backend.service;
 
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jtrust.finetapi.sqs.QueuePayload;
+import com.sma.backend.sqs.QueuePayload;
 import io.awspring.cloud.messaging.core.QueueMessagingTemplate;
 import io.awspring.cloud.messaging.listener.SqsMessageDeletionPolicy;
 import io.awspring.cloud.messaging.listener.annotation.SqsListener;
@@ -34,6 +34,7 @@ public class QueueSqsService {
     }
 
     /**
+     * send method.
      * @param payload {
      *                "source": "s3",
      *                "destination": "netApp",
@@ -41,13 +42,13 @@ public class QueueSqsService {
      *                }
      */
     public void send(QueuePayload payload) {
-        final String message = gson.toJson(payload);
+        final String message = this.gson.toJson(payload);
         log.info("sending message {} ", message);
-        this.queueMessagingTemplate.convertAndSend(queueName, payload);
+        this.queueMessagingTemplate.convertAndSend(this.queueName, payload);
     }
 
     @SqsListener(value = "${aws.sqs.queueName}", deletionPolicy = SqsMessageDeletionPolicy.ALWAYS)
     public void receiveMessage(QueuePayload payload, @Header("headers") Map<String, String> headers) {
-        log.info("### Received message {}, with senderId {} ", gson.toJson(payload), gson.toJson(headers));
+        log.info("### Received message {}, with senderId {} ", this.gson.toJson(payload), this.gson.toJson(headers));
     }
 }
