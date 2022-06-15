@@ -1,43 +1,61 @@
-package com.jtrust.finetapi.config;
+package com.sma.backend.config;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Locale;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.Locale;
-
+/**
+ * Authentication filter.
+ *  @author Sophea Mak
+ *
+ */
 @Slf4j
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
 
+    /**authorization header constant value.*/
     public static final String AUTHORIZATION = "Authorization";
 
     private static final String BASIC = "BASIC ";
 
     private String username;
 
-    protected String secret;
+    private String secret;
 
+    /**
+     * initFilterBean.
+     */
     @Override
     public void initFilterBean()  {
         final FilterConfig filterConfig = getFilterConfig();
         if (filterConfig != null) {
-            username = filterConfig.getInitParameter("username");
-            secret = filterConfig.getInitParameter("secret");
+            this.username = filterConfig.getInitParameter("username");
+            this.secret = filterConfig.getInitParameter("secret");
         }
-        log.info("username :{}", username);
+        log.info("username :{}", this.username);
     }
 
+    /**
+     * doFilterInternal.
+     * @param request http request
+     * @param response http response
+     * @param filterChain filter
+     * @throws ServletException servlet exception
+     * @throws IOException io exception
+     */
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
+            throws ServletException, IOException {
 
         final String header = request.getHeader(AUTHORIZATION);
         //check path
@@ -56,12 +74,14 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void checkBasicAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String header) throws IOException, ServletException {
+    private void checkBasicAuthentication(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain,
+            String header) throws IOException, ServletException {
         if (isBasicAuthenticated(header)) {
             filterChain.doFilter(request, response);
-        } else {
+        }
+        else {
             response.setHeader("WWW-Authenticate", "Basic realm=\"Backend API\"");
-            response.setStatus(401);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 
@@ -78,12 +98,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         final String clientId = getClientUsername(authValue);
         final String pwd = getClientPassword(authValue);
 
-        return username.equals(clientId) && secret.equals(pwd);
+        return this.username.equals(clientId) && this.secret.equals(pwd);
     }
 
     private String getClientUsername(final String authValue) {
-        String username = authValue;
         final int endIndex = authValue.indexOf(':');
+        String username = authValue;
         if (-1 < endIndex) {
             username = authValue.substring(0, endIndex);
         }

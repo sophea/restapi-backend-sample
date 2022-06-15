@@ -1,7 +1,7 @@
-package com.jtrust.finetapi;
+package com.sma.backend;
 
-import com.jtrust.finetapi.service.QueueSqsService;
-import com.jtrust.finetapi.sqs.QueuePayload;
+import com.sma.backend.service.QueueSqsService;
+import com.sma.backend.sqs.QueuePayload;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * sqs rest-api controller.
+ * @author Sophea Mak
+ * start with /api
+ */
 @RestController
 @Slf4j
 @ConditionalOnProperty(name = "aws.sqs.enabled", havingValue = "true")
 public class SqsController {
-
     @Autowired
     private QueueSqsService service;
 
@@ -21,7 +25,7 @@ public class SqsController {
     @SwaggerPublicApi
     public QueuePayload sendPayload(@RequestBody QueuePayload payload) {
         log.info("=========sendPayload=========== {} ", payload);
-        service.send(payload);
+        this.service.send(payload);
         return payload;
     }
 

@@ -1,4 +1,4 @@
-package com.jtrust.finetapi;
+package com.sma.backend;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

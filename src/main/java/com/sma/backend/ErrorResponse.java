@@ -1,4 +1,4 @@
-package com.jtrust.finetapi;
+package com.sma.backend;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,12 +15,12 @@ public class ErrorResponse {
 
     @ApiModelProperty("Doc API defined error code, to mark different error Scenarios")
     public String getErrorCode() {
-        return errorCode;
+        return this.errorCode;
     }
 
     @ApiModelProperty("description of the error scenario")
     public String getMessage() {
-        return message;
+        return this.message;
     }
 }
 
