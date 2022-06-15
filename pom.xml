@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -67,11 +67,11 @@
         </dependency>
 
         <!-- aws spring cloud -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-aws</artifactId>-->
-<!--            <version>2.2.6.RELEASE</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-aws</artifactId>-->
+        <!--            <version>2.2.6.RELEASE</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>io.awspring.cloud</groupId>
             <artifactId>spring-cloud-aws-context</artifactId>
@@ -135,32 +135,32 @@
                     </execution>
                 </executions>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-checkstyle-plugin</artifactId>-->
-<!--                <version>3.0.0</version>-->
-<!--                <configuration>-->
-<!--                    <configLocation>${configs}/checkstyle.xml</configLocation>-->
-<!--                    <encoding>UTF-8</encoding>-->
-<!--                    <consoleOutput>true</consoleOutput>-->
-<!--                    <failsOnError>true</failsOnError>-->
-<!--                    <linkXRef>false</linkXRef>-->
-<!--                    <violationSeverity>warning</violationSeverity>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>checkstyle</id>-->
-<!--                        <phase>validate</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>check</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <failsOnError>true</failsOnError>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-checkstyle-plugin</artifactId>-->
+            <!--                <version>3.0.0</version>-->
+            <!--                <configuration>-->
+            <!--                    <configLocation>${configs}/checkstyle.xml</configLocation>-->
+            <!--                    <encoding>UTF-8</encoding>-->
+            <!--                    <consoleOutput>true</consoleOutput>-->
+            <!--                    <failsOnError>true</failsOnError>-->
+            <!--                    <linkXRef>false</linkXRef>-->
+            <!--                    <violationSeverity>warning</violationSeverity>-->
+            <!--                </configuration>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>checkstyle</id>-->
+            <!--                        <phase>validate</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>check</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <failsOnError>true</failsOnError>-->
 
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -184,9 +184,8 @@
                         <phase>validate</phase>
                         <inherited>true</inherited>
                         <configuration>
-<!--                            <configLocation>io/spring/javaformat/checkstyle/checkstyle.xml</configLocation>-->
-                            <configLocation>checkstyle_pmd_findbugs\springboot-checkstyle.xml</configLocation>
-<!--                            <configLocation>checkstyle_pmd_findbugs\checkstyle.xml</configLocation>-->
+                            <!-- <configLocation>io/spring/javaformat/checkstyle/checkstyle.xml</configLocation>-->
+                            <configLocation>${configs}/springboot-checkstyle.xml</configLocation>
                             <includeTestSourceDirectory>false</includeTestSourceDirectory>
                         </configuration>
                         <goals>
@@ -201,7 +200,7 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-<!--                    <targetJdk>11</targetJdk>-->
+                    <!--                    <targetJdk>11</targetJdk>-->
                     <minimumTokens>30</minimumTokens>
                     <linkXRef>false</linkXRef>
                     <format>xml</format>
@@ -217,8 +216,8 @@
                         <phase>package</phase>
                         <goals>
                             <goal>pmd</goal>
-<!--                            <goal>cpd</goal>-->
-<!--                            <goal>cpd-check</goal>-->
+                            <!--                            <goal>cpd</goal>-->
+                            <!--                            <goal>cpd-check</goal>-->
                             <goal>check</goal>
                         </goals>
                     </execution>
@@ -244,8 +243,6 @@
                     <excludeFilterFile>${configs}/exclude-filter.xml</excludeFilterFile>
                 </configuration>
             </plugin>
-
-
 
 
             <plugin>
