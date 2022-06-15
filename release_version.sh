@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 basedir=$(dirname $0)
 ##build the project
-echo "build phase"
+echo "=============build phase=============="
 mvn clean package
 
 if [[ $? != 0 ]]; then
@@ -20,7 +20,7 @@ echo "create tag $newVersion"
 
 git add pom.xml
 git commit -m "AUTOMATIC: Closed release $newVersion"
-git tag -a sec-$newVersion -m "release version $newVersion"
+git tag -a $newVersion -m "release version $newVersion"
 git push --set-upstream --tags
 
 #echo "upload the artifact"

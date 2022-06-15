@@ -7,6 +7,7 @@ import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.awspring.cloud.messaging.config.QueueMessageHandlerFactory;
 import io.awspring.cloud.messaging.core.QueueMessagingTemplate;
+import java.util.Collections;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,12 +17,11 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.converter.MessageConverter;
 import org.springframework.messaging.handler.annotation.support.PayloadMethodArgumentResolver;
 
-import java.util.Collections;
-
 @Configuration
 @ConditionalOnProperty(name = "aws.sqs.enabled", havingValue = "true")
 @Profile("!(local | test)")
 public class SqsConfig {
+
     @Bean
     public QueueMessagingTemplate queueMessagingTemplate(
             AmazonSQSAsync amazonSQSAsync) {
