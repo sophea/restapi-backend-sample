@@ -13,14 +13,14 @@ public class RetryUtilsTest {
 
     public static void main(String[] args) throws Exception {
         RetryUtilsTest obj = new RetryUtilsTest();
-        String result = (String) RetryUtils.withRetryObject(5, 6000, obj::test);
+        String result = (String) RetryUtils.withRetryObject(3, 6000, obj::test);
 
         System.out.println(result);
     }
 
     @Test
     void testWithRetryObject() throws Exception {
-        String result = (String) RetryUtils.withRetryObject(5, 6000, this::test);
+        String result = (String) RetryUtils.withRetryObject(2, 3000, this::test);
         Assertions.assertEquals("Value", result);
 
 
@@ -28,8 +28,8 @@ public class RetryUtilsTest {
 
     @Test
     void testRetry() throws Exception {
-        boolean result = RetryUtils.withRetry(5, 6000, this::testBoolean);
-        Assertions.assertEquals("Value", result);
+        boolean result = RetryUtils.withRetry(2, 1000, this::testBoolean);
+        Assertions.assertEquals(true, result);
     }
 
     public String test() throws Exception {
