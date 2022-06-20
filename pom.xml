@@ -201,7 +201,6 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <!--                    <targetJdk>11</targetJdk>-->
                     <minimumTokens>30</minimumTokens>
                     <linkXRef>false</linkXRef>
                     <format>xml</format>
@@ -217,8 +216,6 @@
                         <phase>package</phase>
                         <goals>
                             <goal>pmd</goal>
-                            <!--                            <goal>cpd</goal>-->
-                            <!--                            <goal>cpd-check</goal>-->
                             <goal>check</goal>
                         </goals>
                     </execution>

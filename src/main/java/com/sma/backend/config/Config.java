@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.Filter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
@@ -50,19 +49,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Config class.
+ *
  * @author sophea mak
  */
 @Configuration
 @EnableSwagger2
 @Slf4j
 public class Config {
-
-
-    @Autowired
-    private TypeResolver typeResolver;
-
-    @Autowired
-    private Environment env;
 
     @Value("#{${aws.secret.manager}}")
     private Map<String, String> awsConfigProperties;
@@ -71,12 +64,12 @@ public class Config {
 
 
     @Bean
-    public FilterRegistrationBean<Filter> basicAuthenticationFilter() {
+    public FilterRegistrationBean<Filter> basicAuthenticationFilter(Environment env) {
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
         final Filter filter = new AuthenticationFilter();
 
-        registration.addInitParameter("username", this.env.getProperty("basic.username"));
-        registration.addInitParameter("secret", this.env.getProperty("basic.password"));
+        registration.addInitParameter("username", env.getProperty("basic.username"));
+        registration.addInitParameter("secret", env.getProperty("basic.password"));
         registration.setFilter(filter);
         registration.addUrlPatterns("/api/*");
         registration.addUrlPatterns("/swagger-ui.html");
@@ -96,6 +89,7 @@ public class Config {
 
     /**
      * SWAGGER REST-APIs configuration.
+     *
      * @return ApiInfo object
      **/
     @Bean
@@ -109,7 +103,7 @@ public class Config {
     }
 
     @Bean
-    public Docket documentApi() {
+    public Docket documentApi(TypeResolver typeResolver) {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiEndPointsInfo()).select()
                 // .apis(RequestHandlerSelectors.basePackage("com.sma"))
                 .apis(RequestHandlerSelectors.withMethodAnnotation(SwaggerPublicApi.class))
@@ -123,7 +117,7 @@ public class Config {
                         .description("Conflict").build()))
                 .globalResponses(HttpMethod.PUT, Arrays.asList(new ResponseBuilder().code(HttpStatus.BAD_REQUEST.value() + "")
                         .description("Bad Request").build(), new ResponseBuilder().code(HttpStatus.NOT_FOUND.value() + "")
-                        .description("Not Found").build())).additionalModels(this.typeResolver.resolve(ErrorResponse.class));
+                        .description("Not Found").build())).additionalModels(typeResolver.resolve(ErrorResponse.class));
 
     }
 
@@ -132,13 +126,14 @@ public class Config {
      * 2 beans below to fix with springfox version 3.x with springboot 2.6.x with application.properties
      * spring.mvc.pathmatch.matching-strategy = ANT_PATH_MATCHER.
      * Ref : https://github.com/springfox/springfox/issues/3462#issuecomment-1010721223
+     *
      * @param controllerEndpointsSupplier endpoint
-     * @param corsProperties cors
-     * @param endpointMediaTypes media type
-     * @param environment environment
-     * @param servletEndpointsSupplier servlet endpoints
-     * @param webEndpointProperties webEndpoints properties
-     * @param webEndpointsSupplier webEndpoint
+     * @param corsProperties              cors
+     * @param endpointMediaTypes          media type
+     * @param environment                 environment
+     * @param servletEndpointsSupplier    servlet endpoints
+     * @param webEndpointProperties       webEndpoints properties
+     * @param webEndpointsSupplier        webEndpoint
      * @return WebMvcEndpointHandlerMapping object
      */
     @Bean
@@ -165,8 +160,8 @@ public class Config {
      * shouldRegisterLinksMapping.
      *
      * @param webEndpointProperties webEndpointProperties
-     * @param environment environment
-     * @param basePath basePath
+     * @param environment           environment
+     * @param basePath              basePath
      * @return boolean true/false
      */
     private boolean shouldRegisterLinksMapping(WebEndpointProperties webEndpointProperties, Environment environment, String basePath) {
