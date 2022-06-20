@@ -17,6 +17,7 @@ public final class SecureRandomDataUtils {
     private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private SecureRandomDataUtils() {
+
     }
 
     public static String getString(int minLength, int maxLength) {
@@ -44,7 +45,7 @@ public final class SecureRandomDataUtils {
 
             for (int i = 0; i < length; ++i) {
                 int numberOfAvailableCharacters = characters.length;
-                int characterIndex = (int) (SECURE_RANDOM.nextDouble() * (double) numberOfAvailableCharacters);
+                int characterIndex = (int) (SECURE_RANDOM.nextDouble() * numberOfAvailableCharacters);
                 sb.append(characters[characterIndex]);
             }
 

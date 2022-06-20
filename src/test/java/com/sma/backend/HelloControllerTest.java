@@ -30,7 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class HelloControllerTest {
+class HelloControllerTest {
 
     private MockMvc mockMvc;
 

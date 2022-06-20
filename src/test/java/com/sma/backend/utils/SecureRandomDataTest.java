@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
  * Author: Mak Sophea
  * Date: 08/07/2020
  */
-public class SecureRandomDataTest {
+class SecureRandomDataTest {
 
     @Test
-    public void testRandomString() {
+    void testRandomString() {
 
         Assertions.assertEquals(10, SecureRandomDataUtils.getString(10).length());
 

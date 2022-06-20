@@ -16,7 +16,7 @@ public final class RetryUtils {
     private static final Logger log = LoggerFactory.getLogger(RetryUtils.class);
 
     private RetryUtils() {
-
+        //Nothing process
     }
 
     public static Object withRetryObject(int maxTimes, long intervalWait, CallToRetryString call) throws Exception {
@@ -27,7 +27,7 @@ public final class RetryUtils {
                 return call.processWithString();
             } catch (Exception ex) {
                 thrown = ex;
-                log.info("Encountered failure on {} due to {}, attempt retry {} of {}", call.getClass().getName(), ex.getMessage(), (i + 1), maxTimes,
+                log.info("withRetryObject() Encountered failure due to error {}, attempt retry {} of {}", ex.getMessage(), (i + 1), maxTimes,
                         ex);
             }
             try {
@@ -53,7 +53,7 @@ public final class RetryUtils {
                 return true;
             } catch (Exception ex) {
                 thrown = ex;
-                log.info("Encountered failure on {} due to {}, attempt retry {} of {}", call.getClass().getName(), ex.getMessage(), (i + 1), maxTimes,
+                log.info("withRetry() Encountered failure due to error {}, attempt retry {} of {}", ex.getMessage(), (i + 1), maxTimes,
                         ex);
             }
             try {
@@ -77,7 +77,7 @@ public final class RetryUtils {
                 return true;
             } catch (IOException ex) {
                 thrown = ex;
-                log.info("Encountered failure on {} due to {}, attempt retry {} of {}", call.getClass().getName(), ex.getMessage(), (i + 1), maxTimes,
+                log.info("withRetryWithIOException() Encountered failure due to error {}, attempt retry {} of {}", ex.getMessage(), (i + 1), maxTimes,
                         ex);
             }
             try {
