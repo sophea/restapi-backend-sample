@@ -20,7 +20,6 @@ public class HelloController {
     private final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
 
-
     @GetMapping("/hello")
     @SwaggerPublicApi
     public String hello(@RequestParam(value = "name", defaultValue = "FINET API") String name) {
@@ -37,7 +36,7 @@ public class HelloController {
 
     @SwaggerPublicApi
     @GetMapping("/api/myaccount/balance")
-    public Map<String, Object> getMyBalanace() {
+    public Map<String, Object> getMyBalance() {
         log.info("=========getMyBalanace===========");
         final Map<String, Object> result = new HashMap<>();
 
@@ -53,7 +52,7 @@ public class HelloController {
 
     @SwaggerPublicApi
     @PostMapping("/api/myaccount/balance/update")
-    public Map<String, Object> updateMyBalanace(String cif, String account, Double amount, String ref) {
+    public Map<String, Object> updateMyBalance(String cif, String account, Double amount, String ref) {
         log.info("=========updateMyBalanace===========");
         final Map<String, Object> result = new HashMap<>();
 
