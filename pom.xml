@@ -210,6 +210,10 @@
                     <rulesets>
                         <ruleset>${configs}/pmd-rules.xml</ruleset>
                     </rulesets>
+                    <excludes>
+                        <exclude>**/*Test.java</exclude>
+                        <exclude>pom.xml</exclude>
+                    </excludes>
                 </configuration>
                 <executions>
                     <execution>
