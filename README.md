@@ -6,7 +6,6 @@ This is a basic springboot project with that latest version
 - java11 or later
 - maven build
 
-
 It can run JBOSS EAP / Tomcat / Jetty
 
 ```
@@ -20,10 +19,11 @@ mvn package && java -jar target/sample-api-1.0.1-SNAPSHOT.jar
 
 #### Test API
 
-REST-DOC-API : 
+REST-DOC-API :
 https://127.0.0.1/swagger-ui/index.html
 
 ### Health check and version api
+
 ```
 curl https://127.0.0.1/actuator/info
 
@@ -35,7 +35,6 @@ curl http://localhost:8080/actuator/health
 { status: "UP" }
 
 ```
-
 
 ### Features
 
@@ -53,10 +52,11 @@ Sample Java springboot latest version 2.6.x with JAVA JDK 11 or later
 	- Swagger UI  with Basic Authentication  validation
 	- Support actuator info/health
 	- Basic REST API  controller
-Apply APIs with  Basic Authentication  validation
 
+Apply APIs with Basic Authentication validation
 
 #### Springboot with springfox doc rest
+
 ```
  /**
      * 2 beans below to fix with springfox version 3.x with springboot 2.6.x with application.properties
@@ -91,8 +91,40 @@ Apply APIs with  Basic Authentication  validation
 
 https://github.com/spring-io/spring-javaformat
 
+### commit message git hooks
+
+https://dwmkerr.com/conventional-commits-and-semantic-versioning-for-java/
+
+- mkdir .githooks
+- git config core.hooksPath .githooks
+- nano .githooks/commit-msg
+
+````bash
+#!/usr/bin/env bash
+
+# Create a regex for a conventional commit.
+convetional_commit_regex="^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z \-]+\))?!?: .+$"
+
+# Get the commit message (the parameter we're given is just the path to the
+# temporary file which holds the message).
+commit_message=$(cat "$1")
+
+# Check the message, if we match, all good baby.
+if [[ "$commit_message" =~ $convetional_commit_regex ]]; then
+   echo -e "\e[32mCommit message meets Conventional Commit standards...\e[0m"
+   exit 0
+fi
+
+# Uh-oh, this is not a conventional commit, show an example and link to the spec.
+echo -e "\e[31mThe commit message does not meet the Conventional Commit standard\e[0m"
+echo "An example of a valid message is: "
+echo "  feat(login): add the 'remember me' button"
+echo "More details at: https://www.conventionalcommits.org/en/v1.0.0/#summary"
+exit 1
+````
 
 ### Reference Documentation
+
 For further reference, please consider the following sections:
 
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
@@ -101,6 +133,7 @@ For further reference, please consider the following sections:
 * [Spring Web](https://docs.spring.io/spring-boot/docs/2.6.4/reference/htmlsingle/#boot-features-developing-web-applications)
 
 ### Guides
+
 The following guides illustrate how to use some features concretely:
 
 * [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
