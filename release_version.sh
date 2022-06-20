@@ -16,7 +16,7 @@ newVersion=$(echo ${currentVersion} | cut -d\- -f1)
 echo "new Version is ${newVersion}"
 mvn versions:set -DnewVersion=$newVersion
 
-echo "ci(tag) : create tag $newVersion"
+echo "ci(tag): create tag $newVersion"
 
 git add pom.xml
 git commit -m "AUTOMATIC: Closed release $newVersion"
