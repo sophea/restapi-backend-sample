@@ -20,12 +20,7 @@ public final class RetryUtils {
     }
 
     public static Object withRetryObject(int maxTimes, long intervalWait, CallToRetryString call) throws Exception {
-        if (maxTimes <= 0) {
-            throw new IllegalArgumentException("Must run at least one time");
-        }
-        if (intervalWait <= 0) {
-            throw new IllegalArgumentException("Initial wait must be at least 1");
-        }
+        validate(maxTimes, intervalWait);
         Exception thrown = null;
         for (int i = 0; i < maxTimes; i++) {
             try {
@@ -48,12 +43,9 @@ public final class RetryUtils {
     }
 
     public static boolean withRetry(int maxTimes, long intervalWait, CallToRetry call) throws Exception {
-        if (maxTimes <= 0) {
-            throw new IllegalArgumentException("Must run at least one time");
-        }
-        if (intervalWait <= 0) {
-            throw new IllegalArgumentException("Initial wait must be at least 1");
-        }
+
+        validate(maxTimes, intervalWait);
+
         Exception thrown = null;
         for (int i = 0; i < maxTimes; i++) {
             try {
@@ -77,12 +69,7 @@ public final class RetryUtils {
     }
 
     public static boolean withRetryWithIOException(int maxTimes, long intervalWait, CallToRetry call) throws IOException {
-        if (maxTimes <= 0) {
-            throw new IllegalArgumentException("Must run at least one time");
-        }
-        if (intervalWait <= 0) {
-            throw new IllegalArgumentException("Initial wait must be at least 1");
-        }
+        validate(maxTimes, intervalWait);
         IOException thrown = null;
         for (int i = 0; i < maxTimes; i++) {
             try {
@@ -103,6 +90,15 @@ public final class RetryUtils {
             }
         }
         throw thrown;
+    }
+
+    private static void validate(int maxTimes, long intervalWait) {
+        if (maxTimes <= 0) {
+            throw new IllegalArgumentException("Must run at least one time");
+        }
+        if (intervalWait <= 0) {
+            throw new IllegalArgumentException("Initial wait must be at least 1");
+        }
     }
 
     /**
