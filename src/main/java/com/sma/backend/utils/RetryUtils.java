@@ -12,7 +12,12 @@ import org.slf4j.LoggerFactory;
  */
 public final class RetryUtils {
 
+
     private static final Logger log = LoggerFactory.getLogger(RetryUtils.class);
+
+    private RetryUtils() {
+
+    }
 
     public static Object withRetryObject(int maxTimes, long intervalWait, CallToRetryString call) throws Exception {
         if (maxTimes <= 0) {
@@ -33,6 +38,9 @@ public final class RetryUtils {
             try {
                 Thread.sleep(intervalWait);
             } catch (InterruptedException wakeAndAbort) {
+                log.error(wakeAndAbort.getMessage(), wakeAndAbort);
+                // Restore interrupted state...
+                Thread.currentThread().interrupt();
                 break;
             }
         }
@@ -59,6 +67,9 @@ public final class RetryUtils {
             try {
                 Thread.sleep(intervalWait);
             } catch (InterruptedException wakeAndAbort) {
+                log.error(wakeAndAbort.getMessage(), wakeAndAbort);
+                // Restore interrupted state...
+                Thread.currentThread().interrupt();
                 break;
             }
         }
@@ -85,6 +96,9 @@ public final class RetryUtils {
             try {
                 Thread.sleep(intervalWait);
             } catch (InterruptedException wakeAndAbort) {
+                log.error(wakeAndAbort.getMessage(), wakeAndAbort);
+                // Restore interrupted state...
+                Thread.currentThread().interrupt();
                 break;
             }
         }
@@ -103,5 +117,6 @@ public final class RetryUtils {
 
         void process() throws IOException;
     }
+
 
 }
