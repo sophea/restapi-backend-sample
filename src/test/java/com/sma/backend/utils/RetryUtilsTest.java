@@ -20,7 +20,7 @@ public class RetryUtilsTest {
 
     @Test
     void testWithRetryObject() throws Exception {
-        String result = (String) RetryUtils.withRetryObject(2, 3000, this::test);
+        String result = (String) RetryUtils.withRetryObject(3, 3000, this::test);
         Assertions.assertEquals("Value", result);
 
 
@@ -28,7 +28,7 @@ public class RetryUtilsTest {
 
     @Test
     void testRetry() throws Exception {
-        boolean result = RetryUtils.withRetry(2, 1000, this::testBoolean);
+        boolean result = RetryUtils.withRetry(3, 1000, this::testBoolean);
         Assertions.assertEquals(true, result);
     }
 
