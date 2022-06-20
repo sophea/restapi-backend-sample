@@ -2,7 +2,7 @@
 basedir=$(dirname $0)
 ##build the project
 echo "=============build phase=============="
-mvn clean package
+mvn clean package -DskipTests
 
 if [[ $? != 0 ]]; then
  echo ">>>>>>>build is not successful"
@@ -34,6 +34,6 @@ newSnapshotVersion=${versionMajor}$((versionMinor+1))-SNAPSHOT
 
 mvn versions:set -DnewVersion=$newSnapshotVersion
 git add pom.xml
-git commit -m "AUTOMATIC: Created new snapshot version $newSnapshotVersion"
+git commit -m "ci(release): AUTOMATIC: Created new snapshot version $newSnapshotVersion"
 branch=`git branch | grep \* | cut -d ' ' -f2`
 git push --set-upstream origin $branch
