@@ -187,6 +187,7 @@
                             <!-- <configLocation>io/spring/javaformat/checkstyle/checkstyle.xml</configLocation>-->
                             <configLocation>${configs}/springboot-checkstyle.xml</configLocation>
                             <includeTestSourceDirectory>false</includeTestSourceDirectory>
+                            <suppressionsLocation>${configs}/checkstyle-suppressions.xml</suppressionsLocation>
                         </configuration>
                         <goals>
                             <goal>check</goal>
