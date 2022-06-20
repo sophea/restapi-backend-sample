@@ -19,8 +19,16 @@ public class RetryUtilsTest {
     }
 
     @Test
-    public void testRetry() throws Exception {
+    void testWithRetryObject() throws Exception {
         String result = (String) RetryUtils.withRetryObject(5, 6000, this::test);
+        Assertions.assertEquals("Value", result);
+
+
+    }
+
+    @Test
+    void testRetry() throws Exception {
+        boolean result = RetryUtils.withRetry(5, 6000, this::testBoolean);
         Assertions.assertEquals("Value", result);
     }
 
@@ -30,5 +38,10 @@ public class RetryUtilsTest {
             throw new Exception("sth wrong");
         }
         return "Value";
+    }
+
+    public boolean testBoolean() {
+
+        return true;
     }
 }
