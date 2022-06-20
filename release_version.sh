@@ -19,8 +19,8 @@ mvn versions:set -DnewVersion=$newVersion
 echo "ci(tag): create tag $newVersion"
 
 git add pom.xml
-git commit -m "AUTOMATIC: Closed release $newVersion"
-git tag -a $newVersion -m "release version $newVersion"
+git commit -m "ci(tag): AUTOMATIC: Closed release $newVersion"
+git tag -a $newVersion -m "ci(tag): release version $newVersion"
 git push --set-upstream --tags
 
 #echo "upload the artifact"
