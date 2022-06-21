@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Callback {
-    private String token;
-    private String successUrl;
-    private String failureUrl;
+  private String token;
+  private String successUrl;
+  private String failureUrl;
 }

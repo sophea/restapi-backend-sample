@@ -22,35 +22,35 @@ import org.springframework.messaging.handler.annotation.support.PayloadMethodArg
 @Profile("!(local | test)")
 public class SqsConfig {
 
-    @Bean
-    public QueueMessagingTemplate queueMessagingTemplate(
-            AmazonSQSAsync amazonSQSAsync) {
-        return new QueueMessagingTemplate(amazonSQSAsync);
-    }
+  @Bean
+  public QueueMessagingTemplate queueMessagingTemplate(AmazonSQSAsync amazonSQSAsync) {
+    return new QueueMessagingTemplate(amazonSQSAsync);
+  }
 
-    @Bean(name = "amazonSQSAsync")
-    @Primary
-    public AmazonSQSAsync amazonSQSAsync() {
-        return AmazonSQSAsyncClientBuilder.standard()
-                .withRegion(Regions.AP_SOUTHEAST_1)
-                .withCredentials(new DefaultAWSCredentialsProviderChain())
-                .build();
-    }
+  @Bean(name = "amazonSQSAsync")
+  @Primary
+  public AmazonSQSAsync amazonSQSAsync() {
+    return AmazonSQSAsyncClientBuilder.standard()
+        .withRegion(Regions.AP_SOUTHEAST_1)
+        .withCredentials(new DefaultAWSCredentialsProviderChain())
+        .build();
+  }
 
-    @Bean
-    public QueueMessageHandlerFactory queueMessageHandlerFactory(final ObjectMapper mapper, final AmazonSQSAsync amazonSQSAsync) {
-        final QueueMessageHandlerFactory queueHandlerFactory = new QueueMessageHandlerFactory();
-        queueHandlerFactory.setAmazonSqs(amazonSQSAsync);
-        queueHandlerFactory.setArgumentResolvers(Collections.singletonList(
-                new PayloadMethodArgumentResolver(jackson2MessageConverter(mapper))
-        ));
-        return queueHandlerFactory;
-    }
+  @Bean
+  public QueueMessageHandlerFactory queueMessageHandlerFactory(
+      final ObjectMapper mapper, final AmazonSQSAsync amazonSQSAsync) {
+    final QueueMessageHandlerFactory queueHandlerFactory = new QueueMessageHandlerFactory();
+    queueHandlerFactory.setAmazonSqs(amazonSQSAsync);
+    queueHandlerFactory.setArgumentResolvers(
+        Collections.singletonList(
+            new PayloadMethodArgumentResolver(jackson2MessageConverter(mapper))));
+    return queueHandlerFactory;
+  }
 
-    private MessageConverter jackson2MessageConverter(final ObjectMapper mapper) {
-        final MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        converter.setStrictContentTypeMatch(false);
-        converter.setObjectMapper(mapper);
-        return converter;
-    }
+  private MessageConverter jackson2MessageConverter(final ObjectMapper mapper) {
+    final MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+    converter.setStrictContentTypeMatch(false);
+    converter.setObjectMapper(mapper);
+    return converter;
+  }
 }

@@ -11,23 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * sqs rest-api controller.
- * @author Sophea Mak
- * start with /api
+ *
+ * @author Sophea Mak start with /api
  */
 @RestController
 @Slf4j
 @ConditionalOnProperty(name = "aws.sqs.enabled", havingValue = "true")
 public class SqsController {
-    @Autowired
-    private QueueSqsService service;
+  @Autowired
+  private QueueSqsService service;
 
-    @PostMapping("api/send/message")
-    @SwaggerPublicApi
-    public QueuePayload sendPayload(@RequestBody QueuePayload payload) {
-        log.info("=========sendPayload=========== {} ", payload);
-        this.service.send(payload);
-        return payload;
-    }
-
-
+  @PostMapping("api/send/message")
+  @SwaggerPublicApi
+  public QueuePayload sendPayload(@RequestBody QueuePayload payload) {
+    log.info("=========sendPayload=========== {} ", payload);
+    this.service.send(payload);
+    return payload;
+  }
 }
