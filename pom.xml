@@ -290,6 +290,13 @@
                             <goal>install-hooks</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>format-code</id>
+                        <goals>
+                            <goal>format-code</goal>
+                        </goals>
+                    </execution>
+
                     <!-- On Maven verify phase, fail if any file
                     (including unmodified) is badly formatted -->
                     <execution>
