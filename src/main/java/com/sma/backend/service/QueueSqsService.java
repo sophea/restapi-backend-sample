@@ -7,14 +7,13 @@ import com.sma.backend.sqs.QueuePayload;
 import io.awspring.cloud.messaging.core.QueueMessagingTemplate;
 import io.awspring.cloud.messaging.listener.SqsMessageDeletionPolicy;
 import io.awspring.cloud.messaging.listener.annotation.SqsListener;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -35,11 +34,9 @@ public class QueueSqsService {
 
     /**
      * send method.
-     * @param payload {
-     *                "source": "s3",
-     *                "destination": "netApp",
-     *                "uuid": "2342343243243sfaffasdfdsf"
-     *                }
+     *
+     * @param payload { "source": "s3", "destination": "netApp", "uuid": "2342343243243sfaffasdfdsf"
+     *     }
      */
     public void send(QueuePayload payload) {
         final String message = this.gson.toJson(payload);
@@ -48,7 +45,11 @@ public class QueueSqsService {
     }
 
     @SqsListener(value = "${aws.sqs.queueName}", deletionPolicy = SqsMessageDeletionPolicy.ALWAYS)
-    public void receiveMessage(QueuePayload payload, @Header("headers") Map<String, String> headers) {
-        log.info("### Received message {}, with senderId {} ", this.gson.toJson(payload), this.gson.toJson(headers));
+    public void receiveMessage(
+            QueuePayload payload, @Header("headers") Map<String, String> headers) {
+        log.info(
+                "### Received message {}, with senderId {} ",
+                this.gson.toJson(payload),
+                this.gson.toJson(headers));
     }
 }

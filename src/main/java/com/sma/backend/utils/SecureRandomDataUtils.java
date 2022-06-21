@@ -10,13 +10,22 @@ import java.security.SecureRandom;
  */
 public final class SecureRandomDataUtils {
 
-    private static final char[] DEFAULT_RANDOM_CHARS = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
-            'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
-            'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-    private static final char[] DEFAULT_RANDOM_NUMBER = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    private static final char[] DEFAULT_RANDOM_CHARS =
+            new char[] {
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
+                        'h',
+                'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
+                        'z',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+                        'R',
+                'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+            };
+    private static final char[] DEFAULT_RANDOM_NUMBER =
+            new char[] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private SecureRandomDataUtils() {
+        // nothing process
     }
 
     public static String getString(int minLength, int maxLength) {
@@ -25,9 +34,12 @@ public final class SecureRandomDataUtils {
 
     public static String getString(int minLength, int maxLength, char... characters) {
         if (minLength > maxLength) {
-            throw new IllegalArgumentException("The minimum length can't be bigger than the maximum length");
+            throw new IllegalArgumentException(
+                    "The minimum length can't be bigger than the maximum length");
         } else {
-            int length = minLength + (int) (SECURE_RANDOM.nextDouble() * (double) (maxLength - minLength));
+            int length =
+                    minLength
+                            + (int) (SECURE_RANDOM.nextDouble() * (double) (maxLength - minLength));
             return getString(length, characters);
         }
     }
@@ -44,7 +56,8 @@ public final class SecureRandomDataUtils {
 
             for (int i = 0; i < length; ++i) {
                 int numberOfAvailableCharacters = characters.length;
-                int characterIndex = (int) (SECURE_RANDOM.nextDouble() * (double) numberOfAvailableCharacters);
+                int characterIndex =
+                        (int) (SECURE_RANDOM.nextDouble() * numberOfAvailableCharacters);
                 sb.append(characters[characterIndex]);
             }
 

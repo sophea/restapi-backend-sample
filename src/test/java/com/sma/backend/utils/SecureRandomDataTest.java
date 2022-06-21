@@ -1,17 +1,13 @@
 package com.sma.backend.utils;
 
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-/**
- * Author: Mak Sophea
- * Date: 08/07/2020
- */
-public class SecureRandomDataTest {
+/** Author: Mak Sophea Date: 08/07/2020 */
+class SecureRandomDataTest {
 
     @Test
-    public void testRandomString() {
+    void testRandomString() {
 
         Assertions.assertEquals(10, SecureRandomDataUtils.getString(10).length());
 
@@ -19,6 +15,4 @@ public class SecureRandomDataTest {
 
         Assertions.assertNotNull(SecureRandomDataUtils.getString(5, 10));
     }
-
-
 }

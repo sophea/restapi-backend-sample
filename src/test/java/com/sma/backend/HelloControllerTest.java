@@ -30,13 +30,11 @@ import org.springframework.web.context.WebApplicationContext;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class HelloControllerTest {
+class HelloControllerTest {
 
     private MockMvc mockMvc;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
+    @Autowired private WebApplicationContext webApplicationContext;
 
     @BeforeEach
     public void setUp() {
@@ -44,17 +42,18 @@ public class HelloControllerTest {
     }
 
     @AfterEach
-    void tearDown() {
-    }
+    void tearDown() {}
 
     @Test
     void hello() throws Exception {
         String name = "testing";
-        mockMvc.perform(get("/hello")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                        .param("name", name))
+        mockMvc.perform(
+                        get("/hello")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                                .param("name", name))
                 .andExpect(status().isOk())
-                //        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+                //
+                // .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
                 .andExpect(result -> result.toString().equals(String.format("Hello %s!", name)));
     }
 
@@ -64,17 +63,17 @@ public class HelloControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("cif").value("000000000"));
-
     }
 
     @Test
     void updateMyBalanace() throws Exception {
-        mockMvc.perform(post("/api/myaccount/balance/update")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                        .param("cif", "00000000")
-                        .param("account", "000000000")
-                        .param("amount", "100.33")
-                        .param("ref", "ref-000000000"))
+        mockMvc.perform(
+                        post("/api/myaccount/balance/update")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                                .param("cif", "00000000")
+                                .param("account", "000000000")
+                                .param("amount", "100.33")
+                                .param("ref", "ref-000000000"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("cif").value("00000000"));

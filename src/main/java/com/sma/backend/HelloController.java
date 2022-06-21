@@ -19,7 +19,6 @@ public class HelloController {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
-
     @GetMapping("/hello")
     @SwaggerPublicApi
     public String hello(@RequestParam(value = "name", defaultValue = "FINET API") String name) {
@@ -32,7 +31,6 @@ public class HelloController {
 
         return String.format("Hello %s!", name);
     }
-
 
     @SwaggerPublicApi
     @GetMapping("/api/myaccount/balance")
@@ -52,7 +50,8 @@ public class HelloController {
 
     @SwaggerPublicApi
     @PostMapping("/api/myaccount/balance/update")
-    public Map<String, Object> updateMyBalance(String cif, String account, Double amount, String ref) {
+    public Map<String, Object> updateMyBalance(
+            String cif, String account, Double amount, String ref) {
         log.info("=========updateMyBalanace===========");
         final Map<String, Object> result = new HashMap<>();
 

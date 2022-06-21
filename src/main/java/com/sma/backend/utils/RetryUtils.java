@@ -1,8 +1,7 @@
 package com.sma.backend.utils;
 
 import java.io.IOException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This is common class for retry solution.
@@ -10,16 +9,15 @@ import org.slf4j.LoggerFactory;
  * @author : Mak Sophea
  * @since : 08/20/2021
  */
+@Slf4j
 public final class RetryUtils {
 
-
-    private static final Logger log = LoggerFactory.getLogger(RetryUtils.class);
-
     private RetryUtils() {
-
+        // Nothing process
     }
 
-    public static Object withRetryObject(int maxTimes, long intervalWait, CallToRetryString call) throws Exception {
+    public static Object withRetryObject(int maxTimes, long intervalWait, CallToRetryString call)
+            throws Exception {
         validate(maxTimes, intervalWait);
         Exception thrown = null;
         for (int i = 0; i < maxTimes; i++) {
@@ -27,7 +25,11 @@ public final class RetryUtils {
                 return call.processWithString();
             } catch (Exception ex) {
                 thrown = ex;
-                log.info("Encountered failure on {} due to {}, attempt retry {} of {}", call.getClass().getName(), ex.getMessage(), (i + 1), maxTimes,
+                log.info(
+                        "withRetryObject() Encountered failure due to error {}, attempt retry {} of {}",
+                        ex.getMessage(),
+                        (i + 1),
+                        maxTimes,
                         ex);
             }
             try {
@@ -42,7 +44,8 @@ public final class RetryUtils {
         throw thrown;
     }
 
-    public static boolean withRetry(int maxTimes, long intervalWait, CallToRetry call) throws Exception {
+    public static boolean withRetry(int maxTimes, long intervalWait, CallToRetry call)
+            throws Exception {
 
         validate(maxTimes, intervalWait);
 
@@ -53,7 +56,11 @@ public final class RetryUtils {
                 return true;
             } catch (Exception ex) {
                 thrown = ex;
-                log.info("Encountered failure on {} due to {}, attempt retry {} of {}", call.getClass().getName(), ex.getMessage(), (i + 1), maxTimes,
+                log.info(
+                        "withRetry() Encountered failure due to error {}, attempt retry {} of {}",
+                        ex.getMessage(),
+                        (i + 1),
+                        maxTimes,
                         ex);
             }
             try {
@@ -68,7 +75,8 @@ public final class RetryUtils {
         throw thrown;
     }
 
-    public static boolean withRetryWithIOException(int maxTimes, long intervalWait, CallToRetry call) throws IOException {
+    public static boolean withRetryWithIOException(
+            int maxTimes, long intervalWait, CallToRetry call) throws IOException {
         validate(maxTimes, intervalWait);
         IOException thrown = null;
         for (int i = 0; i < maxTimes; i++) {
@@ -77,7 +85,11 @@ public final class RetryUtils {
                 return true;
             } catch (IOException ex) {
                 thrown = ex;
-                log.info("Encountered failure on {} due to {}, attempt retry {} of {}", call.getClass().getName(), ex.getMessage(), (i + 1), maxTimes,
+                log.info(
+                        "withRetryWithIOException() Encountered failure due to error {}, attempt retry {} of {}",
+                        ex.getMessage(),
+                        (i + 1),
+                        maxTimes,
                         ex);
             }
             try {
@@ -101,9 +113,7 @@ public final class RetryUtils {
         }
     }
 
-    /**
-     * interface class.
-     */
+    /** interface class. */
     public interface CallToRetryString {
 
         Object processWithString() throws Exception;
@@ -113,6 +123,4 @@ public final class RetryUtils {
 
         void process() throws IOException;
     }
-
-
 }

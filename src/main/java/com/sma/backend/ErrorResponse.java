@@ -23,4 +23,3 @@ public class ErrorResponse {
         return this.message;
     }
 }
-

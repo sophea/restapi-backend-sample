@@ -23,8 +23,7 @@ import org.springframework.messaging.handler.annotation.support.PayloadMethodArg
 public class SqsConfig {
 
     @Bean
-    public QueueMessagingTemplate queueMessagingTemplate(
-            AmazonSQSAsync amazonSQSAsync) {
+    public QueueMessagingTemplate queueMessagingTemplate(AmazonSQSAsync amazonSQSAsync) {
         return new QueueMessagingTemplate(amazonSQSAsync);
     }
 
@@ -38,12 +37,13 @@ public class SqsConfig {
     }
 
     @Bean
-    public QueueMessageHandlerFactory queueMessageHandlerFactory(final ObjectMapper mapper, final AmazonSQSAsync amazonSQSAsync) {
+    public QueueMessageHandlerFactory queueMessageHandlerFactory(
+            final ObjectMapper mapper, final AmazonSQSAsync amazonSQSAsync) {
         final QueueMessageHandlerFactory queueHandlerFactory = new QueueMessageHandlerFactory();
         queueHandlerFactory.setAmazonSqs(amazonSQSAsync);
-        queueHandlerFactory.setArgumentResolvers(Collections.singletonList(
-                new PayloadMethodArgumentResolver(jackson2MessageConverter(mapper))
-        ));
+        queueHandlerFactory.setArgumentResolvers(
+                Collections.singletonList(
+                        new PayloadMethodArgumentResolver(jackson2MessageConverter(mapper))));
         return queueHandlerFactory;
     }
 
