@@ -37,7 +37,6 @@ public final class CommonUtils {
             while ((length = inputStream.read(bytes)) >= 0) {
                 zipOutputStream.write(bytes, 0, length);
             }
-            zipOutputStream.close();
             return new String(Base64.getEncoder().encode(byteArrayOutputStream.toByteArray()));
         } catch (IOException ex) {
             throw new EncodingException("base64 zip encoding error", ex);

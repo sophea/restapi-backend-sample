@@ -37,9 +37,7 @@ public final class SecureRandomDataUtils {
             throw new IllegalArgumentException(
                     "The minimum length can't be bigger than the maximum length");
         } else {
-            int length =
-                    minLength
-                            + (int) (SECURE_RANDOM.nextDouble() * (double) (maxLength - minLength));
+            int length = minLength + (int) (SECURE_RANDOM.nextDouble() * (maxLength - minLength));
             return getString(length, characters);
         }
     }

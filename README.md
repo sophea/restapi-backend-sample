@@ -123,20 +123,67 @@ echo "More details at: https://www.conventionalcommits.org/en/v1.0.0/#summary"
 exit 1
 ````
 
-### Reference Documentation
+### Google java format
 
-For further reference, please consider the following sections:
+- https://google.github.io/styleguide/javaguide.html
+- https://github.com/Cosium/git-code-format-maven-plugin
+- https://github.com/google/google-java-format
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.6.4/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.6.4/maven-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.6.4/reference/htmlsingle/#boot-features-developing-web-applications)
+### plugin build
 
-### Guides
+- mvn clean package  : it will be automatic format your source codes (format-code)
+- mvn clean install : it will validate git-code-format
 
-The following guides illustrate how to use some features concretely:
+```
+Manual code formatting
+mvn git-code-format:format-code -Dgcf.globPattern=**/*
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
+Manual code format validation
+mvn git-code-format:validate-code-format -Dgcf.globPattern=**/*
 
+```
+
+### Maven plugin
+
+````xml
+
+<plugin>
+  <groupId>com.cosium.code</groupId>
+  <artifactId>git-code-format-maven-plugin</artifactId>
+  <version>3.4</version>
+  <executions>
+    <!-- On commit, format the modified java files -->
+    <execution>
+      <id>install-formatter-hook</id>
+      <goals>
+        <goal>install-hooks</goal>
+      </goals>
+    </execution>
+    <execution>
+      <id>format-code</id>
+      <phase>package</phase>
+      <goals>
+        <goal>format-code</goal>
+      </goals>
+    </execution>
+    <!-- On Maven verify phase, fail if any file
+    (including unmodified) is badly formatted -->
+    <execution>
+      <id>validate-code-format</id>
+      <goals>
+        <goal>validate-code-format</goal>
+      </goals>
+    </execution>
+  </executions>
+  <configuration>
+
+    <googleJavaFormatOptions>
+      <aosp>true</aosp>
+      <fixImportsOnly>false</fixImportsOnly>
+      <skipSortingImports>false</skipSortingImports>
+      <skipRemovingUnusedImports>false</skipRemovingUnusedImports>
+    </googleJavaFormatOptions>
+    <preCommitHookPipeline>| grep -F '[ERROR]' || exit 0 &amp;&amp; exit 1</preCommitHookPipeline>
+  </configuration>
+</plugin>
+````
