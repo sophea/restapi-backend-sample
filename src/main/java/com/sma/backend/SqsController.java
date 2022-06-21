@@ -17,17 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @ConditionalOnProperty(name = "aws.sqs.enabled", havingValue = "true")
 public class SqsController {
-  private final QueueSqsService service;
+    private final QueueSqsService service;
 
-  SqsController(final QueueSqsService service) {
-    this.service = service;
-  }
+    SqsController(final QueueSqsService service) {
+        this.service = service;
+    }
 
-  @PostMapping("api/send/message")
-  @SwaggerPublicApi
-  public QueuePayload sendPayload(@RequestBody QueuePayload payload) {
-    log.info("=========sendPayload=========== {} ", payload);
-    this.service.send(payload);
-    return payload;
-  }
+    @PostMapping("api/send/message")
+    @SwaggerPublicApi
+    public QueuePayload sendPayload(@RequestBody QueuePayload payload) {
+        log.info("=========sendPayload=========== {} ", payload);
+        this.service.send(payload);
+        return payload;
+    }
 }

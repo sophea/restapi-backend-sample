@@ -20,34 +20,36 @@ import org.springframework.stereotype.Service;
 @ConditionalOnProperty(name = "aws.sqs.enabled", havingValue = "true")
 public class QueueSqsService {
 
-  private final QueueMessagingTemplate queueMessagingTemplate;
+    private final QueueMessagingTemplate queueMessagingTemplate;
 
-  private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-  @Value("${aws.sqs.queueName}")
-  private String queueName;
+    @Value("${aws.sqs.queueName}")
+    private String queueName;
 
-  @Autowired
-  public QueueSqsService(AmazonSQSAsync amazonSQSAsync) {
-    this.queueMessagingTemplate = new QueueMessagingTemplate(amazonSQSAsync);
-  }
+    @Autowired
+    public QueueSqsService(AmazonSQSAsync amazonSQSAsync) {
+        this.queueMessagingTemplate = new QueueMessagingTemplate(amazonSQSAsync);
+    }
 
-  /**
-   * send method.
-   *
-   * @param payload { "source": "s3", "destination": "netApp", "uuid": "2342343243243sfaffasdfdsf" }
-   */
-  public void send(QueuePayload payload) {
-    final String message = this.gson.toJson(payload);
-    log.info("sending message {} ", message);
-    this.queueMessagingTemplate.convertAndSend(this.queueName, payload);
-  }
+    /**
+     * send method.
+     *
+     * @param payload { "source": "s3", "destination": "netApp", "uuid": "2342343243243sfaffasdfdsf"
+     *     }
+     */
+    public void send(QueuePayload payload) {
+        final String message = this.gson.toJson(payload);
+        log.info("sending message {} ", message);
+        this.queueMessagingTemplate.convertAndSend(this.queueName, payload);
+    }
 
-  @SqsListener(value = "${aws.sqs.queueName}", deletionPolicy = SqsMessageDeletionPolicy.ALWAYS)
-  public void receiveMessage(QueuePayload payload, @Header("headers") Map<String, String> headers) {
-    log.info(
-        "### Received message {}, with senderId {} ",
-        this.gson.toJson(payload),
-        this.gson.toJson(headers));
-  }
+    @SqsListener(value = "${aws.sqs.queueName}", deletionPolicy = SqsMessageDeletionPolicy.ALWAYS)
+    public void receiveMessage(
+            QueuePayload payload, @Header("headers") Map<String, String> headers) {
+        log.info(
+                "### Received message {}, with senderId {} ",
+                this.gson.toJson(payload),
+                this.gson.toJson(headers));
+    }
 }

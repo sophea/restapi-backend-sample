@@ -11,10 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Sophea Mak
  */
 @SpringBootApplication(
-    exclude = {ContextStackAutoConfiguration.class, ContextInstanceDataAutoConfiguration.class})
+        exclude = {ContextStackAutoConfiguration.class, ContextInstanceDataAutoConfiguration.class})
 public class MainApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(MainApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(MainApplication.class, args);
+    }
 }

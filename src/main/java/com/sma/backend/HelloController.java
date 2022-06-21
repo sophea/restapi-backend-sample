@@ -16,52 +16,52 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class HelloController {
 
-  private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-  private final Logger logger = LoggerFactory.getLogger(HelloController.class);
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
-  @GetMapping("/hello")
-  @SwaggerPublicApi
-  public String hello(@RequestParam(value = "name", defaultValue = "FINET API") String name) {
-    log.info("=========hello===========");
+    @GetMapping("/hello")
+    @SwaggerPublicApi
+    public String hello(@RequestParam(value = "name", defaultValue = "FINET API") String name) {
+        log.info("=========hello===========");
 
-    this.logger.debug("=========DEBUG===========");
-    this.logger.info("=========INFO===========");
-    this.logger.warn("=========WARNING==========");
-    this.logger.error("=========ERROR===========");
+        this.logger.debug("=========DEBUG===========");
+        this.logger.info("=========INFO===========");
+        this.logger.warn("=========WARNING==========");
+        this.logger.error("=========ERROR===========");
 
-    return String.format("Hello %s!", name);
-  }
+        return String.format("Hello %s!", name);
+    }
 
-  @SwaggerPublicApi
-  @GetMapping("/api/myaccount/balance")
-  public Map<String, Object> getMyBalance() {
-    log.info("=========getMyBalanace===========");
-    final Map<String, Object> result = new HashMap<>();
+    @SwaggerPublicApi
+    @GetMapping("/api/myaccount/balance")
+    public Map<String, Object> getMyBalance() {
+        log.info("=========getMyBalanace===========");
+        final Map<String, Object> result = new HashMap<>();
 
-    result.put("cif", "000000000");
-    result.put("accountName", "JTRB Testing");
-    result.put("balance", 134.53d);
-    result.put("currency", "USD");
-    result.put("status", 1);
+        result.put("cif", "000000000");
+        result.put("accountName", "JTRB Testing");
+        result.put("balance", 134.53d);
+        result.put("currency", "USD");
+        result.put("status", 1);
 
-    log.info(String.format("result output %s", this.gson.toJson(result)));
-    return result;
-  }
+        log.info(String.format("result output %s", this.gson.toJson(result)));
+        return result;
+    }
 
-  @SwaggerPublicApi
-  @PostMapping("/api/myaccount/balance/update")
-  public Map<String, Object> updateMyBalance(
-      String cif, String account, Double amount, String ref) {
-    log.info("=========updateMyBalanace===========");
-    final Map<String, Object> result = new HashMap<>();
+    @SwaggerPublicApi
+    @PostMapping("/api/myaccount/balance/update")
+    public Map<String, Object> updateMyBalance(
+            String cif, String account, Double amount, String ref) {
+        log.info("=========updateMyBalanace===========");
+        final Map<String, Object> result = new HashMap<>();
 
-    result.put("cif", cif);
-    result.put("accountName", account);
-    result.put("balance", amount);
-    result.put("currency", "USD");
-    result.put("status", 1);
-    result.put("ref", ref);
-    log.info(String.format("result output %s", this.gson.toJson(result)));
-    return result;
-  }
+        result.put("cif", cif);
+        result.put("accountName", account);
+        result.put("balance", amount);
+        result.put("currency", "USD");
+        result.put("status", 1);
+        result.put("ref", ref);
+        log.info(String.format("result output %s", this.gson.toJson(result)));
+        return result;
+    }
 }

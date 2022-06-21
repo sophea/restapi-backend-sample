@@ -17,14 +17,14 @@ import org.junit.jupiter.api.Test;
  */
 class CommonUtilsTest {
 
-  @BeforeEach
-  void setUp() {}
+    @BeforeEach
+    void setUp() {}
 
-  @Test
-  void base64Zip() {
-    String content = "testValue";
-    InputStream stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
-    String value = CommonUtils.base64Zip(stream, "test.zip");
-    Assertions.assertNotNull(value);
-  }
+    @Test
+    void base64Zip() {
+        String content = "testValue";
+        InputStream stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+        String value = CommonUtils.base64Zip(stream, "test.zip");
+        Assertions.assertNotNull(value);
+    }
 }

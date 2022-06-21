@@ -9,7 +9,7 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class QueuePayload {
 
-  private String source;
-  private String destination;
-  private String uuid;
+    private String source;
+    private String destination;
+    private String uuid;
 }

@@ -9,8 +9,8 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class FinetApiApplicationTests {
 
-  @Test
-  void contextLoads() {
-    Assertions.assertEquals(1, 1);
-  }
+    @Test
+    void contextLoads() {
+        Assertions.assertEquals(1, 1);
+    }
 }

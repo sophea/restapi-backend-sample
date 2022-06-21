@@ -32,53 +32,50 @@ import org.springframework.web.context.WebApplicationContext;
 @ActiveProfiles("test")
 class HelloControllerTest {
 
-  private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-  @Autowired private WebApplicationContext webApplicationContext;
+    @Autowired private WebApplicationContext webApplicationContext;
 
-  @BeforeEach
-  public void setUp() {
-    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-  }
+    @BeforeEach
+    public void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
 
-  @AfterEach
-  void tearDown() {}
+    @AfterEach
+    void tearDown() {}
 
-  @Test
-  void hello() throws Exception {
-    String name = "testing";
-    mockMvc
-        .perform(
-            get("/hello")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                .param("name", name))
-        .andExpect(status().isOk())
-        //
-        // .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        .andExpect(result -> result.toString().equals(String.format("Hello %s!", name)));
-  }
+    @Test
+    void hello() throws Exception {
+        String name = "testing";
+        mockMvc.perform(
+                        get("/hello")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                                .param("name", name))
+                .andExpect(status().isOk())
+                //
+                // .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+                .andExpect(result -> result.toString().equals(String.format("Hello %s!", name)));
+    }
 
-  @Test
-  void getMyBalance() throws Exception {
-    mockMvc
-        .perform(get("/api/myaccount/balance"))
-        .andExpect(status().isOk())
-        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("cif").value("000000000"));
-  }
+    @Test
+    void getMyBalance() throws Exception {
+        mockMvc.perform(get("/api/myaccount/balance"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("cif").value("000000000"));
+    }
 
-  @Test
-  void updateMyBalanace() throws Exception {
-    mockMvc
-        .perform(
-            post("/api/myaccount/balance/update")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                .param("cif", "00000000")
-                .param("account", "000000000")
-                .param("amount", "100.33")
-                .param("ref", "ref-000000000"))
-        .andExpect(status().isOk())
-        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("cif").value("00000000"));
-  }
+    @Test
+    void updateMyBalanace() throws Exception {
+        mockMvc.perform(
+                        post("/api/myaccount/balance/update")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                                .param("cif", "00000000")
+                                .param("account", "000000000")
+                                .param("amount", "100.33")
+                                .param("ref", "ref-000000000"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("cif").value("00000000"));
+    }
 }
