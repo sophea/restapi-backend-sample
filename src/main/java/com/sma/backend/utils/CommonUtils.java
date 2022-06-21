@@ -30,7 +30,7 @@ public final class CommonUtils {
     public static String base64Zip(InputStream inputStream, String inputFileName) {
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream)) {
-            ZipEntry zipEntry = new ZipEntry(inputFileName);
+            final ZipEntry zipEntry = new ZipEntry(inputFileName);
             zipOutputStream.putNextEntry(zipEntry);
             byte[] bytes = new byte[1024];
             int length;

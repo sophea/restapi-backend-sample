@@ -15,6 +15,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Service;
 
+/**
+ * QueueSqsService class.
+ *
+ * @author sophea mak
+ * @since 2022
+ */
 @Slf4j
 @Service
 @ConditionalOnProperty(name = "aws.sqs.enabled", havingValue = "true")
@@ -31,7 +37,6 @@ public class QueueSqsService {
     public QueueSqsService(AmazonSQSAsync amazonSQSAsync) {
         this.queueMessagingTemplate = new QueueMessagingTemplate(amazonSQSAsync);
     }
-
     /**
      * send method.
      *
