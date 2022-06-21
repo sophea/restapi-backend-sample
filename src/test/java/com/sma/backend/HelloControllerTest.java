@@ -53,7 +53,8 @@ class HelloControllerTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .param("name", name))
         .andExpect(status().isOk())
-        //        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+        //
+        // .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
         .andExpect(result -> result.toString().equals(String.format("Hello %s!", name)));
   }
 

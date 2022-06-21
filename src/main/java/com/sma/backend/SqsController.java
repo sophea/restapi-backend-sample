@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * sqs rest-api controller.
- * @author Sophea Mak
- * start with /api
+ *
+ * @author Sophea Mak start with /api
  */
 @RestController
 @Slf4j
