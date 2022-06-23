@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * hello controller.
+ *
+ * @author sophea mak
+ */
 @RestController
 @Slf4j
 public class HelloController {
