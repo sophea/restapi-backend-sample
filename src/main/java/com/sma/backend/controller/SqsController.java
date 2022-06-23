@@ -1,5 +1,10 @@
-package com.sma.backend;
+/*
+ * Copyright (c) 2022.
+ */
 
+package com.sma.backend.controller;
+
+import com.sma.backend.config.SwaggerPublicApi;
 import com.sma.backend.service.QueueSqsService;
 import com.sma.backend.sqs.QueuePayload;
 import lombok.extern.slf4j.Slf4j;

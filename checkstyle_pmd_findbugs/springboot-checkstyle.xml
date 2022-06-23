@@ -10,7 +10,8 @@
                 io.spring.javaformat.checkstyle.check.SpringJavadocCheck,
                 com.puppycrawl.tools.checkstyle.checks.blocks.RightCurlyCheck,
                 com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck,
-                com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck"/>
+                com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck,
+                com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck"/>
 
     </module>
 

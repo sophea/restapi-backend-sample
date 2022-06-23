@@ -1,7 +1,12 @@
-package com.sma.backend;
+/*
+ * Copyright (c) 2022.
+ */
+
+package com.sma.backend.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.sma.backend.config.SwaggerPublicApi;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;

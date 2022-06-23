@@ -1,4 +1,8 @@
-package com.sma.backend;
+/*
+ * Copyright (c) 2022.
+ */
+
+package com.sma.backend.json;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

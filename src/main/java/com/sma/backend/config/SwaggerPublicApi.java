@@ -1,4 +1,8 @@
-package com.sma.backend;
+/*
+ * Copyright (c) 2022.
+ */
+
+package com.sma.backend.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
