@@ -7,7 +7,9 @@ package com.sma.backend.controller;
 import com.sma.backend.config.SwaggerPublicApi;
 import com.sma.backend.service.QueueSqsService;
 import com.sma.backend.sqs.QueuePayload;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,13 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @ConditionalOnProperty(name = "aws.sqs.enabled", havingValue = "true")
 public class SqsController {
     private final QueueSqsService service;
-
-    SqsController(final QueueSqsService service) {
-        this.service = service;
-    }
 
     @PostMapping("api/send/message")
     @SwaggerPublicApi
