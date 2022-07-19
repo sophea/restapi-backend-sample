@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# Run the following command in the root of your project to install this pre-push hook:
+# cp git-hooks/pre-push .git/hooks/pre-push; chmod 700 .git/hooks/pre-push
+# @author : Mak Sophea
+# @version : 1.0
+#
+
+# get the path to this script file
+DIR=$(dirname "$0")
+
+if [ -s pom.xml ]; then
+
+	##build the project
+	echo "=============build phase with test package=============="
+	./mvnw clean test
+
+	if [[ $? != 0 ]]; then
+	 echo -e "\e[32m>>>>>>>build test is not successful>>>....\e[0m"
+	 exit 1
+	fi
+fi
+

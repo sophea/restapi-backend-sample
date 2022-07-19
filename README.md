@@ -123,6 +123,24 @@ echo "More details at: https://www.conventionalcommits.org/en/v1.0.0/#summary"
 exit 1
 ````
 
+# Pre-push message
+
+run this command to your local :
+
+````
+git config core.hooksPath .githooks
+````
+
+Every push commit: It will run build Test with successful result first, in case the build failed with test case it will
+reject your commit.
+
+## How to skip this validation
+
+You can disable the validation using --no-verify flag, but should only do this if you have already run the tests on
+previous commits/pushes
+
+git push origin develop --no-verify
+
 ### Google java format
 
 - https://google.github.io/styleguide/javaguide.html
