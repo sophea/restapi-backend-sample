@@ -31,7 +31,7 @@ public class HelloController {
 
     @GetMapping("/hello")
     @SwaggerPublicApi
-    public String hello(@RequestParam(value = "name", defaultValue = "FINET API") String name) {
+    public String hello(@RequestParam(value = "name", defaultValue = "API") String name) {
         log.info("=========hello===========");
 
         this.logger.debug("=========DEBUG===========");

@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
+
 basedir=$(dirname $0)
 
 ##get current version
 currentVersion=$(mvn help:evaluate -Dexpression=project.version | grep -e '^[^\[]')
 
-./docker-build.sh
+bash docker-build.sh
 
 REPO_NAME=`$basedir/repo-name.sh`
 

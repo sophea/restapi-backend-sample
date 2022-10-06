@@ -19,5 +19,6 @@ VOLUME /tmp
 ARG JAR_FILE=/workspace/app/target/*.jar
 COPY --from=build ${JAR_FILE} app.jar
 
+
 EXPOSE 8443
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
