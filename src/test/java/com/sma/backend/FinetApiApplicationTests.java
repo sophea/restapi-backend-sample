@@ -11,10 +11,12 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class FinetApiApplicationTests {
 
-    @Autowired private HelloController controller;
+    @Autowired
+    private HelloController controller;
 
     @Test
     void contextLoads() {
         Assertions.assertThat(controller).isNotNull();
     }
+
 }

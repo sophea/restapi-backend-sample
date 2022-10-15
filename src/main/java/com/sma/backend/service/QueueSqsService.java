@@ -37,11 +37,11 @@ public class QueueSqsService {
     public QueueSqsService(AmazonSQSAsync amazonSQSAsync) {
         this.queueMessagingTemplate = new QueueMessagingTemplate(amazonSQSAsync);
     }
+
     /**
      * send method.
-     *
-     * @param payload { "source": "s3", "destination": "netApp", "uuid": "2342343243243sfaffasdfdsf"
-     *     }
+     * @param payload { "source": "s3", "destination": "netApp", "uuid":
+     * "2342343243243sfaffasdfdsf" }
      */
     public void send(QueuePayload payload) {
         final String message = this.gson.toJson(payload);
@@ -50,11 +50,8 @@ public class QueueSqsService {
     }
 
     @SqsListener(value = "${aws.sqs.queueName}", deletionPolicy = SqsMessageDeletionPolicy.ALWAYS)
-    public void receiveMessage(
-            QueuePayload payload, @Header("headers") Map<String, String> headers) {
-        log.info(
-                "### Received message {}, with senderId {} ",
-                this.gson.toJson(payload),
-                this.gson.toJson(headers));
+    public void receiveMessage(QueuePayload payload, @Header("headers") Map<String, String> headers) {
+        log.info("### Received message {}, with senderId {} ", this.gson.toJson(payload), this.gson.toJson(headers));
     }
+
 }

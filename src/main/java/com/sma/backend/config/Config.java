@@ -86,75 +86,45 @@ public class Config {
 
     /**
      * SWAGGER REST-APIs configuration.
-     *
      * @return ApiInfo object
      */
     @Bean
     public ApiInfo apiEndPointsInfo() {
-        return (new ApiInfoBuilder())
-                .title("Simple API")
-                .description("Simple API")
-                .termsOfServiceUrl("Terms of Service applied")
-                .version("1.0.0")
-                .contact(
-                        new Contact(
-                                "Sophea Mak", "https://github.com/sophea", "sopheamak@gmail.com"))
-                .build();
+        return (new ApiInfoBuilder()).title("Simple API").description("Simple API")
+                .termsOfServiceUrl("Terms of Service applied").version("1.0.0")
+                .contact(new Contact("Sophea Mak", "https://github.com/sophea", "sopheamak@gmail.com")).build();
     }
 
     @Bean
     public Docket documentApi(TypeResolver typeResolver) {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiEndPointsInfo())
-                .select()
+        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiEndPointsInfo()).select()
                 // .apis(RequestHandlerSelectors.basePackage("com.sma"))
-                .apis(RequestHandlerSelectors.withMethodAnnotation(SwaggerPublicApi.class))
-                .paths(PathSelectors.any())
-                .build()
-                .pathMapping("/")
-                .ignoredParameterTypes(Resource.class)
-                .useDefaultResponseMessages(false)
-                .globalResponses(
-                        HttpMethod.GET,
+                .apis(RequestHandlerSelectors.withMethodAnnotation(SwaggerPublicApi.class)).paths(PathSelectors.any())
+                .build().pathMapping("/").ignoredParameterTypes(
+                        Resource.class)
+                .useDefaultResponseMessages(
+                        false)
+                .globalResponses(HttpMethod.GET,
                         Arrays.asList(
-                                new ResponseBuilder()
-                                        .code(HttpStatus.BAD_REQUEST.value() + "")
-                                        .description("Bad Request")
-                                        .build(),
-                                new ResponseBuilder()
-                                        .code(HttpStatus.NOT_FOUND.value() + "")
-                                        .description("Not Found")
+                                new ResponseBuilder().code(HttpStatus.BAD_REQUEST.value() + "")
+                                        .description("Bad Request").build(),
+                                new ResponseBuilder().code(HttpStatus.NOT_FOUND.value() + "").description("Not Found")
                                         .build()))
-                .globalResponses(
-                        HttpMethod.POST,
-                        Arrays.asList(
-                                new ResponseBuilder()
-                                        .code(HttpStatus.BAD_REQUEST.value() + "")
-                                        .description("Bad Request")
-                                        .build(),
-                                new ResponseBuilder()
-                                        .code(HttpStatus.CONFLICT.value() + "")
-                                        .description("Conflict")
-                                        .build()))
-                .globalResponses(
-                        HttpMethod.PUT,
-                        Arrays.asList(
-                                new ResponseBuilder()
-                                        .code(HttpStatus.BAD_REQUEST.value() + "")
-                                        .description("Bad Request")
-                                        .build(),
-                                new ResponseBuilder()
-                                        .code(HttpStatus.NOT_FOUND.value() + "")
-                                        .description("Not Found")
-                                        .build()))
+                .globalResponses(HttpMethod.POST, Arrays.asList(
+                        new ResponseBuilder().code(HttpStatus.BAD_REQUEST.value() + "").description("Bad Request")
+                                .build(),
+                        new ResponseBuilder().code(HttpStatus.CONFLICT.value() + "").description("Conflict").build()))
+                .globalResponses(HttpMethod.PUT, Arrays.asList(
+                        new ResponseBuilder().code(HttpStatus.BAD_REQUEST.value() + "").description("Bad Request")
+                                .build(),
+                        new ResponseBuilder().code(HttpStatus.NOT_FOUND.value() + "").description("Not Found").build()))
                 .additionalModels(typeResolver.resolve(ErrorResponse.class));
     }
 
     /**
      * 2 beans below to fix with springfox version 3.x with springboot 2.6.x with
-     * application.properties spring.mvc.pathmatch.matching-strategy = ANT_PATH_MATCHER. Ref :
-     * https://github.com/springfox/springfox/issues/3462#issuecomment-1010721223
-     *
+     * application.properties spring.mvc.pathmatch.matching-strategy = ANT_PATH_MATCHER.
+     * Ref : https://github.com/springfox/springfox/issues/3462#issuecomment-1010721223
      * @param controllerEndpointsSupplier endpoint
      * @param corsProperties cors
      * @param endpointMediaTypes media type
@@ -165,14 +135,10 @@ public class Config {
      * @return WebMvcEndpointHandlerMapping object
      */
     @Bean
-    public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(
-            WebEndpointsSupplier webEndpointsSupplier,
-            ServletEndpointsSupplier servletEndpointsSupplier,
-            ControllerEndpointsSupplier controllerEndpointsSupplier,
-            EndpointMediaTypes endpointMediaTypes,
-            CorsEndpointProperties corsProperties,
-            WebEndpointProperties webEndpointProperties,
-            Environment environment) {
+    public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(WebEndpointsSupplier webEndpointsSupplier,
+            ServletEndpointsSupplier servletEndpointsSupplier, ControllerEndpointsSupplier controllerEndpointsSupplier,
+            EndpointMediaTypes endpointMediaTypes, CorsEndpointProperties corsProperties,
+            WebEndpointProperties webEndpointProperties, Environment environment) {
         List<ExposableEndpoint<?>> allEndpoints = new ArrayList<>();
         Collection<ExposableWebEndpoint> webEndpoints = webEndpointsSupplier.getEndpoints();
         allEndpoints.addAll(webEndpoints);
@@ -180,30 +146,24 @@ public class Config {
         allEndpoints.addAll(controllerEndpointsSupplier.getEndpoints());
         String basePath = webEndpointProperties.getBasePath();
         EndpointMapping endpointMapping = new EndpointMapping(basePath);
-        boolean shouldRegisterLinksMapping =
-                this.shouldRegisterLinksMapping(webEndpointProperties, environment, basePath);
-        return new WebMvcEndpointHandlerMapping(
-                endpointMapping,
-                webEndpoints,
-                endpointMediaTypes,
-                corsProperties.toCorsConfiguration(),
-                new EndpointLinksResolver(allEndpoints, basePath),
+        boolean shouldRegisterLinksMapping = this.shouldRegisterLinksMapping(webEndpointProperties, environment,
+                basePath);
+        return new WebMvcEndpointHandlerMapping(endpointMapping, webEndpoints, endpointMediaTypes,
+                corsProperties.toCorsConfiguration(), new EndpointLinksResolver(allEndpoints, basePath),
                 shouldRegisterLinksMapping);
     }
 
     /**
      * shouldRegisterLinksMapping.
-     *
      * @param webEndpointProperties webEndpointProperties
      * @param environment environment
      * @param basePath basePath
      * @return boolean true/false
      */
-    private boolean shouldRegisterLinksMapping(
-            WebEndpointProperties webEndpointProperties, Environment environment, String basePath) {
-        return webEndpointProperties.getDiscovery().isEnabled()
-                && (StringUtils.hasText(basePath)
-                        || ManagementPortType.get(environment)
-                                .equals(ManagementPortType.DIFFERENT));
+    private boolean shouldRegisterLinksMapping(WebEndpointProperties webEndpointProperties, Environment environment,
+            String basePath) {
+        return webEndpointProperties.getDiscovery().isEnabled() && (StringUtils.hasText(basePath)
+                || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
     }
+
 }

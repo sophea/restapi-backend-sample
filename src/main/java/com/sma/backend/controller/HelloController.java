@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
     private final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
     @GetMapping("/hello")
@@ -60,8 +61,7 @@ public class HelloController {
 
     @SwaggerPublicApi
     @PostMapping("/api/myaccount/balance/update")
-    public Map<String, Object> updateMyBalance(
-            String cif, String account, Double amount, String ref) {
+    public Map<String, Object> updateMyBalance(String cif, String account, Double amount, String ref) {
         log.info("=========updateMyBalanace===========");
         final Map<String, Object> result = new HashMap<>();
 
@@ -74,4 +74,5 @@ public class HelloController {
         log.info(String.format("result output %s", this.gson.toJson(result)));
         return result;
     }
+
 }

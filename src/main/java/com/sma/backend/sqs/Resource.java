@@ -8,7 +8,11 @@ import lombok.Setter;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Resource {
+
     private String id;
+
     private String fileName;
+
     private String archiveFilename;
+
 }

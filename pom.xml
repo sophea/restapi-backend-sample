@@ -1,361 +1,377 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.0</version>
-    <relativePath/> <!-- lookup parent from repository -->
-  </parent>
-  <groupId>com.jtrust</groupId>
-  <artifactId>sample-api</artifactId>
-  <version>1.0.6-SNAPSHOT</version>
-  <packaging>jar</packaging>
-  <name>sample-api</name>
-  <description>Demo project for Spring Boot</description>
-  <properties>
-    <java.version>11</java.version>
-    <!--sonar-->
-    <jacoco.version>0.8.3</jacoco.version>
-    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-    <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
-    <sonar.language>java</sonar.language>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <artifactId>sample-api</artifactId>
+    <build>
+        <plugins>
 
-    <sonar.organization>sophea2022</sonar.organization>
-    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    <sonar.coverage.jacoco.xmlReportPaths>
-      ${project.basedir}/../target/site/jacoco-aggregate/jacoco.xml
-    </sonar.coverage.jacoco.xmlReportPaths>
+            <plugin>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <artifactId>lombok</artifactId>
+                            <groupId>org.projectlombok</groupId>
+                        </exclude>
+                    </excludes>
+                    <executable>true</executable>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                        <id>build-info</id>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <id>repackage</id>
+                    </execution>
+                </executions>
+                <groupId>org.springframework.boot</groupId>
+            </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-checkstyle-plugin</artifactId>-->
+            <!--                <version>3.0.0</version>-->
+            <!--                <configuration>-->
+            <!--                    <configLocation>${configs}/checkstyle.xml</configLocation>-->
+            <!--                    <encoding>UTF-8</encoding>-->
+            <!--                    <consoleOutput>true</consoleOutput>-->
+            <!--                    <failsOnError>true</failsOnError>-->
+            <!--                    <linkXRef>false</linkXRef>-->
+            <!--                    <violationSeverity>warning</violationSeverity>-->
+            <!--                </configuration>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>checkstyle</id>-->
+            <!--                        <phase>validate</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>check</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <failsOnError>true</failsOnError>-->
 
-    <!--suppress UnresolvedMavenProperty -->
-    <configs>${project.basedir}/checkstyle_pmd_findbugs</configs>
-  </properties>
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
 
-  <dependencyManagement>
+            <plugin>
+                <artifactId>spring-javaformat-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                        <inherited>true</inherited>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
+                <groupId>io.spring.javaformat</groupId>
+                <version>0.0.35</version>
+
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <artifactId>checkstyle</artifactId>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <version>9.3</version>
+                    </dependency>
+                    <dependency>
+                        <artifactId>spring-javaformat-checkstyle</artifactId>
+                        <groupId>io.spring.javaformat</groupId>
+                        <version>0.0.33</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <!-- <configLocation>io/spring/javaformat/checkstyle/checkstyle.xml</configLocation>-->
+                            <configLocation>${configs}/springboot-checkstyle.xml</configLocation>
+                            <includeTestSourceDirectory>false</includeTestSourceDirectory>
+                            <suppressionsLocation>${configs}/checkstyle-suppressions.xml</suppressionsLocation>
+                        </configuration>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <id>checkstyle-validation</id>
+                        <inherited>true</inherited>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>3.1.1</version>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*Test.java</exclude>
+                        <exclude>pom.xml</exclude>
+                    </excludes>
+                    <failOnViolation>true</failOnViolation>
+                    <failurePriority>1</failurePriority>
+                    <format>xml</format>
+                    <linkXRef>false</linkXRef>
+                    <minimumTokens>30</minimumTokens>
+                    <printFailingErrors>true</printFailingErrors>
+                    <rulesets>
+                        <ruleset>${configs}/pmd-rules.xml</ruleset>
+                    </rulesets>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>pmd</goal>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>3.13.0</version>
+            </plugin>
+
+            <plugin>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <configuration>
+                    <effort>Max</effort>
+                    <excludeFilterFile>${configs}/exclude-filter.xml</excludeFilterFile>
+                    <includeTests>true</includeTests>
+                    <threshold>Low</threshold>
+                    <xmlOutput>true</xmlOutput>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <artifactId>spotbugs</artifactId>
+                        <groupId>com.github.spotbugs</groupId>
+                        <version>4.7.0</version>
+                    </dependency>
+                </dependencies>
+                <groupId>com.github.spotbugs</groupId>
+                <version>4.6.0.2</version>
+            </plugin>
+
+
+            <plugin>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <append>true</append>
+                    <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+                    <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+                    <excludes>
+                        <exclude>*MethodAccess</exclude>
+                    </excludes>
+                    <output>file</output>
+                    <skip>false</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <!-- attached to Maven test phase -->
+                    <execution>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <id>report</id>
+                        <phase>test</phase>
+                    </execution>
+                </executions>
+                <groupId>org.jacoco</groupId>
+                <version>${jacoco.version}</version>
+            </plugin>
+
+            <plugin>
+                <artifactId>git-code-format-maven-plugin</artifactId>
+                <configuration>
+                    <googleJavaFormatOptions>
+                        <aosp>true</aosp>
+                        <fixImportsOnly>false</fixImportsOnly>
+                        <skipRemovingUnusedImports>false</skipRemovingUnusedImports>
+                        <skipSortingImports>false</skipSortingImports>
+                    </googleJavaFormatOptions>
+                    <preCommitHookPipeline>| grep -F '[ERROR]' || exit 0 &amp;&amp; exit 1</preCommitHookPipeline>
+
+                </configuration>
+                <executions>
+                    <!-- On commit, format the modified java files -->
+                    <execution>
+                        <goals>
+                            <goal>install-hooks</goal>
+                        </goals>
+                        <id>install-formatter-hook</id>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>format-code</goal>
+                        </goals>
+                        <id>format-code</id>
+                        <phase>package</phase>
+                    </execution>
+                    <!-- On Maven verify phase, fail if any file
+                    (including unmodified) is badly formatted -->
+                    <execution>
+                        <goals>
+                            <goal>validate-code-format</goal>
+                        </goals>
+                        <id>validate-code-format</id>
+                    </execution>
+                </executions>
+                <groupId>com.cosium.code</groupId>
+                <version>3.4</version>
+            </plugin>
+
+            <!-- git-hook-msg -->
+            <plugin>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <!-- git-hook-msg-->
+                        <configuration>
+                            <commandlineArgs>${project.basedir}/.githooks/git-hooks-config.sh</commandlineArgs>
+                            <executable>bash</executable>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <id>git-hook-msg</id>
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
+                <groupId>org.codehaus.mojo</groupId>
+                <version>3.0.0</version>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
-      <dependency>
-        <groupId>io.awspring.cloud</groupId>
-        <artifactId>spring-cloud-aws-dependencies</artifactId>
-        <version>2.4.1</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+        <dependency>
+            <artifactId>google-java-format</artifactId>
+            <groupId>com.google.googlejavaformat</groupId>
+            <version>1.15.0</version>
+        </dependency>
+
+        <dependency>
+            <artifactId>springfox-boot-starter</artifactId>
+            <groupId>io.springfox</groupId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <groupId>org.springframework.boot</groupId>
+        </dependency>
+        <dependency>
+            <artifactId>lombok</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.boot</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>spring-cloud-aws-context</artifactId>
+            <groupId>io.awspring.cloud</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>spring-cloud-starter-aws-messaging</artifactId>
+            <groupId>io.awspring.cloud</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>spring-cloud-aws-autoconfigure</artifactId>
+            <groupId>io.awspring.cloud</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <artifactId>gson</artifactId>
+            <groupId>com.google.code.gson</groupId>
+        </dependency>
+        <dependency>
+            <artifactId>commons-lang3</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <version>3.12.0</version>
+        </dependency>
     </dependencies>
-  </dependencyManagement>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <artifactId>spring-cloud-aws-dependencies</artifactId>
+                <groupId>io.awspring.cloud</groupId>
+                <scope>import</scope>
+                <type>pom</type>
+                <version>2.4.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <description>Demo project for Spring Boot</description>
+    <groupId>com.jtrust</groupId>
+    <modelVersion>4.0.0</modelVersion>
+    <name>sample-api</name>
+    <packaging>jar</packaging>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.google.googlejavaformat</groupId>
-      <artifactId>google-java-format</artifactId>
-      <version>1.15.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-boot-starter</artifactId>
-      <version>3.0.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.awspring.cloud</groupId>
-      <artifactId>spring-cloud-aws-context</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.awspring.cloud</groupId>
-      <artifactId>spring-cloud-starter-aws-messaging</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.awspring.cloud</groupId>
-      <artifactId>spring-cloud-aws-autoconfigure</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-tomcat</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>3.12.0</version>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-
-      <plugin>
+    <parent>
+        <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <executable>true</executable>
-          <layers>
-            <enabled>true</enabled>
-          </layers>
-          <excludes>
-            <exclude>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-            </exclude>
-          </excludes>
-        </configuration>
-        <executions>
-          <execution>
-            <id>build-info</id>
-            <goals>
-              <goal>build-info</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>repackage</id>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <!--            <plugin>-->
-      <!--                <groupId>org.apache.maven.plugins</groupId>-->
-      <!--                <artifactId>maven-checkstyle-plugin</artifactId>-->
-      <!--                <version>3.0.0</version>-->
-      <!--                <configuration>-->
-      <!--                    <configLocation>${configs}/checkstyle.xml</configLocation>-->
-      <!--                    <encoding>UTF-8</encoding>-->
-      <!--                    <consoleOutput>true</consoleOutput>-->
-      <!--                    <failsOnError>true</failsOnError>-->
-      <!--                    <linkXRef>false</linkXRef>-->
-      <!--                    <violationSeverity>warning</violationSeverity>-->
-      <!--                </configuration>-->
-      <!--                <executions>-->
-      <!--                    <execution>-->
-      <!--                        <id>checkstyle</id>-->
-      <!--                        <phase>validate</phase>-->
-      <!--                        <goals>-->
-      <!--                            <goal>check</goal>-->
-      <!--                        </goals>-->
-      <!--                        <configuration>-->
-      <!--                            <failsOnError>true</failsOnError>-->
+        <relativePath/>
+        <version>2.7.0</version> <!-- lookup parent from repository -->
+    </parent>
 
-      <!--                        </configuration>-->
-      <!--                    </execution>-->
-      <!--                </executions>-->
-      <!--            </plugin>-->
+    <properties>
+        <configs>${project.basedir}/checkstyle_pmd_findbugs</configs>
+        <!--sonar-->
+        <jacoco.version>0.8.3</jacoco.version>
+        <java.version>11</java.version>
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ${project.basedir}/../target/site/jacoco-aggregate/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.1.1</version>
-        <dependencies>
-          <dependency>
-            <groupId>com.puppycrawl.tools</groupId>
-            <artifactId>checkstyle</artifactId>
-            <version>9.3</version>
-          </dependency>
-          <dependency>
-            <groupId>io.spring.javaformat</groupId>
-            <artifactId>spring-javaformat-checkstyle</artifactId>
-            <version>0.0.33</version>
-          </dependency>
-        </dependencies>
-        <executions>
-          <execution>
-            <id>checkstyle-validation</id>
-            <phase>validate</phase>
-            <inherited>true</inherited>
-            <configuration>
-              <!-- <configLocation>io/spring/javaformat/checkstyle/checkstyle.xml</configLocation>-->
-              <configLocation>${configs}/springboot-checkstyle.xml</configLocation>
-              <includeTestSourceDirectory>false</includeTestSourceDirectory>
-              <suppressionsLocation>${configs}/checkstyle-suppressions.xml</suppressionsLocation>
-            </configuration>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.language>java</sonar.language>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.13.0</version>
-        <configuration>
-          <minimumTokens>30</minimumTokens>
-          <linkXRef>false</linkXRef>
-          <format>xml</format>
-          <failOnViolation>true</failOnViolation>
-          <failurePriority>1</failurePriority>
-          <printFailingErrors>true</printFailingErrors>
-          <rulesets>
-            <ruleset>${configs}/pmd-rules.xml</ruleset>
-          </rulesets>
-          <excludes>
-            <exclude>**/*Test.java</exclude>
-            <exclude>pom.xml</exclude>
-          </excludes>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>pmd</goal>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+        <!--suppress UnresolvedMavenProperty -->
+        <sonar.organization>sophea2022</sonar.organization>
+    </properties>
 
-      <plugin>
-        <groupId>com.github.spotbugs</groupId>
-        <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.6.0.2</version>
-        <dependencies>
-          <dependency>
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs</artifactId>
-            <version>4.7.0</version>
-          </dependency>
-        </dependencies>
-        <configuration>
-          <effort>Max</effort>
-          <threshold>Low</threshold>
-          <includeTests>true</includeTests>
-          <xmlOutput>true</xmlOutput>
-          <excludeFilterFile>${configs}/exclude-filter.xml</excludeFilterFile>
-        </configuration>
-      </plugin>
-
-
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco.version}</version>
-        <configuration>
-          <skip>false</skip>
-          <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
-          <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
-          <output>file</output>
-          <append>true</append>
-          <excludes>
-            <exclude>*MethodAccess</exclude>
-          </excludes>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <!-- attached to Maven test phase -->
-          <execution>
-            <id>report</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>com.cosium.code</groupId>
-        <artifactId>git-code-format-maven-plugin</artifactId>
-        <version>3.4</version>
-        <executions>
-          <!-- On commit, format the modified java files -->
-          <execution>
-            <id>install-formatter-hook</id>
-            <goals>
-              <goal>install-hooks</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>format-code</id>
-            <phase>package</phase>
-            <goals>
-              <goal>format-code</goal>
-            </goals>
-          </execution>
-          <!-- On Maven verify phase, fail if any file
-          (including unmodified) is badly formatted -->
-          <execution>
-            <id>validate-code-format</id>
-            <goals>
-              <goal>validate-code-format</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <googleJavaFormatOptions>
-            <aosp>true</aosp>
-            <fixImportsOnly>false</fixImportsOnly>
-            <skipSortingImports>false</skipSortingImports>
-            <skipRemovingUnusedImports>false</skipRemovingUnusedImports>
-          </googleJavaFormatOptions>
-          <preCommitHookPipeline>| grep -F '[ERROR]' || exit 0 &amp;&amp; exit 1</preCommitHookPipeline>
-
-        </configuration>
-      </plugin>
-
-      <!-- git-hook-msg -->
-      <plugin>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.0.0</version>
-        <groupId>org.codehaus.mojo</groupId>
-        <executions>
-          <execution>
-            <!-- git-hook-msg-->
-            <id>git-hook-msg</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>bash</executable>
-              <commandlineArgs>${project.basedir}/.githooks/git-hooks-config.sh</commandlineArgs>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.13.0</version>
-      </plugin>
-    </plugins>
-  </reporting>
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>3.13.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
+    <version>1.0.6-SNAPSHOT</version>
 </project>

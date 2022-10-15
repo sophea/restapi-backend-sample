@@ -15,4 +15,5 @@ class SecureRandomDataTest {
 
         Assertions.assertNotNull(SecureRandomDataUtils.getString(5, 10));
     }
+
 }

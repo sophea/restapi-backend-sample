@@ -91,6 +91,8 @@ Apply APIs with Basic Authentication validation
 
 https://github.com/spring-io/spring-javaformat
 
+You can now run ./mvnw spring-javaformat:apply to reformat code.
+
 ### commit message git hooks
 
 https://dwmkerr.com/conventional-commits-and-semantic-versioning-for-java/
@@ -166,42 +168,42 @@ mvn git-code-format:validate-code-format -Dgcf.globPattern=**/*
 ````xml
 
 <plugin>
-  <groupId>com.cosium.code</groupId>
-  <artifactId>git-code-format-maven-plugin</artifactId>
-  <version>3.4</version>
-  <executions>
-    <!-- On commit, format the modified java files -->
-    <execution>
-      <id>install-formatter-hook</id>
-      <goals>
-        <goal>install-hooks</goal>
-      </goals>
-    </execution>
-    <execution>
-      <id>format-code</id>
-      <phase>package</phase>
-      <goals>
-        <goal>format-code</goal>
-      </goals>
-    </execution>
-    <!-- On Maven verify phase, fail if any file
-    (including unmodified) is badly formatted -->
-    <execution>
-      <id>validate-code-format</id>
-      <goals>
-        <goal>validate-code-format</goal>
-      </goals>
-    </execution>
-  </executions>
-  <configuration>
+    <groupId>com.cosium.code</groupId>
+    <artifactId>git-code-format-maven-plugin</artifactId>
+    <version>3.4</version>
+    <executions>
+        <!-- On commit, format the modified java files -->
+        <execution>
+            <id>install-formatter-hook</id>
+            <goals>
+                <goal>install-hooks</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>format-code</id>
+            <phase>package</phase>
+            <goals>
+                <goal>format-code</goal>
+            </goals>
+        </execution>
+        <!-- On Maven verify phase, fail if any file
+        (including unmodified) is badly formatted -->
+        <execution>
+            <id>validate-code-format</id>
+            <goals>
+                <goal>validate-code-format</goal>
+            </goals>
+        </execution>
+    </executions>
+    <configuration>
 
-    <googleJavaFormatOptions>
-      <aosp>true</aosp>
-      <fixImportsOnly>false</fixImportsOnly>
-      <skipSortingImports>false</skipSortingImports>
-      <skipRemovingUnusedImports>false</skipRemovingUnusedImports>
-    </googleJavaFormatOptions>
-    <preCommitHookPipeline>| grep -F '[ERROR]' || exit 0 &amp;&amp; exit 1</preCommitHookPipeline>
-  </configuration>
+        <googleJavaFormatOptions>
+            <aosp>true</aosp>
+            <fixImportsOnly>false</fixImportsOnly>
+            <skipSortingImports>false</skipSortingImports>
+            <skipRemovingUnusedImports>false</skipRemovingUnusedImports>
+        </googleJavaFormatOptions>
+        <preCommitHookPipeline>| grep -F '[ERROR]' || exit 0 &amp;&amp; exit 1</preCommitHookPipeline>
+    </configuration>
 </plugin>
 ````

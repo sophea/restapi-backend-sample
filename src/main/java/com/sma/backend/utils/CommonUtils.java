@@ -22,7 +22,6 @@ public final class CommonUtils {
 
     /**
      * base64Zip.
-     *
      * @param inputStream inputstream
      * @param inputFileName filename
      * @return String with base64 encoding
@@ -38,8 +37,10 @@ public final class CommonUtils {
                 zipOutputStream.write(bytes, 0, length);
             }
             return new String(Base64.getEncoder().encode(byteArrayOutputStream.toByteArray()));
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             throw new EncodingException("base64 zip encoding error", ex);
         }
     }
+
 }

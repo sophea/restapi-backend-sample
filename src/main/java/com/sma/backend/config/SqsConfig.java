@@ -36,20 +36,17 @@ public class SqsConfig {
     @Bean(name = "amazonSqsAsync")
     @Primary
     public AmazonSQSAsync amazonSqsAsync() {
-        return AmazonSQSAsyncClientBuilder.standard()
-                .withRegion(Regions.AP_SOUTHEAST_1)
-                .withCredentials(new DefaultAWSCredentialsProviderChain())
-                .build();
+        return AmazonSQSAsyncClientBuilder.standard().withRegion(Regions.AP_SOUTHEAST_1)
+                .withCredentials(new DefaultAWSCredentialsProviderChain()).build();
     }
 
     @Bean
-    public QueueMessageHandlerFactory queueMessageHandlerFactory(
-            final ObjectMapper mapper, final AmazonSQSAsync amazonSQSAsync) {
+    public QueueMessageHandlerFactory queueMessageHandlerFactory(final ObjectMapper mapper,
+            final AmazonSQSAsync amazonSQSAsync) {
         final QueueMessageHandlerFactory queueHandlerFactory = new QueueMessageHandlerFactory();
         queueHandlerFactory.setAmazonSqs(amazonSQSAsync);
         queueHandlerFactory.setArgumentResolvers(
-                Collections.singletonList(
-                        new PayloadMethodArgumentResolver(jackson2MessageConverter(mapper))));
+                Collections.singletonList(new PayloadMethodArgumentResolver(jackson2MessageConverter(mapper))));
         return queueHandlerFactory;
     }
 
@@ -59,4 +56,5 @@ public class SqsConfig {
         converter.setObjectMapper(mapper);
         return converter;
     }
+
 }

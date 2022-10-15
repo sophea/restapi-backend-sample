@@ -16,25 +16,22 @@ public final class RetryUtils {
         // Nothing process
     }
 
-    public static Object withRetryObject(int maxTimes, long intervalWait, CallToRetryString call)
-            throws Exception {
+    public static Object withRetryObject(int maxTimes, long intervalWait, CallToRetryString call) throws Exception {
         validate(maxTimes, intervalWait);
         Exception thrown = null;
         for (int i = 0; i < maxTimes; i++) {
             try {
                 return call.processWithString();
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 thrown = ex;
-                log.info(
-                        "withRetryObject() Encountered failure due to error {}, attempt retry {} of {}",
-                        ex.getMessage(),
-                        (i + 1),
-                        maxTimes,
-                        ex);
+                log.info("withRetryObject() Encountered failure due to error {}, attempt retry {} of {}",
+                        ex.getMessage(), (i + 1), maxTimes, ex);
             }
             try {
                 Thread.sleep(intervalWait);
-            } catch (InterruptedException wakeAndAbort) {
+            }
+            catch (InterruptedException wakeAndAbort) {
                 log.error(wakeAndAbort.getMessage(), wakeAndAbort);
                 // Restore interrupted state...
                 Thread.currentThread().interrupt();
@@ -44,8 +41,7 @@ public final class RetryUtils {
         throw thrown;
     }
 
-    public static boolean withRetry(int maxTimes, long intervalWait, CallToRetry call)
-            throws Exception {
+    public static boolean withRetry(int maxTimes, long intervalWait, CallToRetry call) throws Exception {
 
         validate(maxTimes, intervalWait);
 
@@ -54,18 +50,16 @@ public final class RetryUtils {
             try {
                 call.process();
                 return true;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 thrown = ex;
-                log.info(
-                        "withRetry() Encountered failure due to error {}, attempt retry {} of {}",
-                        ex.getMessage(),
-                        (i + 1),
-                        maxTimes,
-                        ex);
+                log.info("withRetry() Encountered failure due to error {}, attempt retry {} of {}", ex.getMessage(),
+                        (i + 1), maxTimes, ex);
             }
             try {
                 Thread.sleep(intervalWait);
-            } catch (InterruptedException wakeAndAbort) {
+            }
+            catch (InterruptedException wakeAndAbort) {
                 log.error(wakeAndAbort.getMessage(), wakeAndAbort);
                 // Restore interrupted state...
                 Thread.currentThread().interrupt();
@@ -75,26 +69,24 @@ public final class RetryUtils {
         throw thrown;
     }
 
-    public static boolean withRetryWithIOException(
-            int maxTimes, long intervalWait, CallToRetry call) throws IOException {
+    public static boolean withRetryWithIOException(int maxTimes, long intervalWait, CallToRetry call)
+            throws IOException {
         validate(maxTimes, intervalWait);
         IOException thrown = null;
         for (int i = 0; i < maxTimes; i++) {
             try {
                 call.process();
                 return true;
-            } catch (IOException ex) {
+            }
+            catch (IOException ex) {
                 thrown = ex;
-                log.info(
-                        "withRetryWithIOException() Encountered failure due to error {}, attempt retry {} of {}",
-                        ex.getMessage(),
-                        (i + 1),
-                        maxTimes,
-                        ex);
+                log.info("withRetryWithIOException() Encountered failure due to error {}, attempt retry {} of {}",
+                        ex.getMessage(), (i + 1), maxTimes, ex);
             }
             try {
                 Thread.sleep(intervalWait);
-            } catch (InterruptedException wakeAndAbort) {
+            }
+            catch (InterruptedException wakeAndAbort) {
                 log.error(wakeAndAbort.getMessage(), wakeAndAbort);
                 // Restore interrupted state...
                 Thread.currentThread().interrupt();
@@ -117,10 +109,13 @@ public final class RetryUtils {
     public interface CallToRetryString {
 
         Object processWithString() throws Exception;
+
     }
 
     public interface CallToRetry {
 
         void process() throws IOException;
+
     }
+
 }

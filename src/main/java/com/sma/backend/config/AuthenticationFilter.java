@@ -22,7 +22,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
 
-    /** authorization header constant value. */
+    /**
+     * authorization header constant value.
+     */
     public static final String AUTHORIZATION = "Authorization";
 
     private static final String BASIC = "BASIC ";
@@ -31,7 +33,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     private String secret;
 
-    /** initFilterBean. */
+    /**
+     * initFilterBean.
+     */
     @Override
     public void initFilterBean() {
         final FilterConfig filterConfig = getFilterConfig();
@@ -44,7 +48,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     /**
      * doFilterInternal.
-     *
      * @param request http request
      * @param response http response
      * @param filterChain filter
@@ -52,11 +55,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
      * @throws IOException io exception
      */
     @Override
-    protected void doFilterInternal(
-            final HttpServletRequest request,
-            final HttpServletResponse response,
-            final FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response,
+            final FilterChain filterChain) throws ServletException, IOException {
 
         final String header = request.getHeader(AUTHORIZATION);
         // check path
@@ -68,9 +68,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         }
 
         // basic
-        if ("/swagger-ui.html".equals(uriPath)
-                || uriPath.startsWith("/swagger-ui")
-                || uriPath.startsWith("/actuator/")
+        if ("/swagger-ui.html".equals(uriPath) || uriPath.startsWith("/swagger-ui") || uriPath.startsWith("/actuator/")
                 || uriPath.startsWith("/api")) {
             checkBasicAuthentication(request, response, filterChain, header);
             return;
@@ -78,15 +76,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void checkBasicAuthentication(
-            final HttpServletRequest request,
-            final HttpServletResponse response,
-            final FilterChain filterChain,
-            String header)
-            throws IOException, ServletException {
+    private void checkBasicAuthentication(final HttpServletRequest request, final HttpServletResponse response,
+            final FilterChain filterChain, String header) throws IOException, ServletException {
         if (isBasicAuthenticated(header)) {
             filterChain.doFilter(request, response);
-        } else {
+        }
+        else {
             response.setHeader("WWW-Authenticate", "Basic realm=\"Backend API\"");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
@@ -100,10 +95,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         // Get encoded user and password, comes after "BASIC "
         // Decode it, using any base 64 decoder
 
-        final String authValue =
-                org.apache.commons.lang3.StringUtils.toEncodedString(
-                        Base64.decodeBase64(authorization.substring(BASIC.length())),
-                        Charset.defaultCharset());
+        final String authValue = org.apache.commons.lang3.StringUtils.toEncodedString(
+                Base64.decodeBase64(authorization.substring(BASIC.length())), Charset.defaultCharset());
         final String clientId = getClientUsername(authValue);
         final String pwd = getClientPassword(authValue);
 
@@ -127,4 +120,5 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         }
         return password;
     }
+
 }

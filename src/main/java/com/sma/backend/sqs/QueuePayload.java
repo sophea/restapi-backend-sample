@@ -10,6 +10,9 @@ import lombok.Setter;
 public class QueuePayload {
 
     private String source;
+
     private String destination;
+
     private String uuid;
+
 }

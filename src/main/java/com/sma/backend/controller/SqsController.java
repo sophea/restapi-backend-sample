@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @ConditionalOnProperty(name = "aws.sqs.enabled", havingValue = "true")
 public class SqsController {
+
     private final QueueSqsService service;
 
     @PostMapping("api/send/message")
@@ -34,4 +35,5 @@ public class SqsController {
         this.service.send(payload);
         return payload;
     }
+
 }

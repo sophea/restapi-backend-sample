@@ -9,7 +9,9 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "error response")
 public class ErrorResponse {
+
     private final String errorCode;
+
     private final String message;
 
     public ErrorResponse(String code, String message) {
@@ -26,4 +28,5 @@ public class ErrorResponse {
     public String getMessage() {
         return this.message;
     }
+
 }

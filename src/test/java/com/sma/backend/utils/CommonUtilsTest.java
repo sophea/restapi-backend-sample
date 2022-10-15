@@ -18,7 +18,8 @@ import org.junit.jupiter.api.Test;
 class CommonUtilsTest {
 
     @BeforeEach
-    void setUp() {}
+    void setUp() {
+    }
 
     @Test
     void base64Zip() {
@@ -27,4 +28,5 @@ class CommonUtilsTest {
         String value = CommonUtils.base64Zip(stream, "test.zip");
         Assertions.assertNotNull(value);
     }
+
 }
